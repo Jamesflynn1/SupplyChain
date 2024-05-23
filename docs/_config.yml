@@ -133,7 +133,7 @@ assets:
     enabled: true # boolean, keep empty means false
     # specify the Jekyll environment, empty means both
     # only works if `assets.self_host.enabled` is 'true'
-    env: # [development | production]
+    env: production
 
 pwa:
   enabled: true # the option for PWA feature (installable)
@@ -148,7 +148,7 @@ pwa:
 paginate: 10
 
 # The base URL of your site
-baseurl: "https://jamesflynn1.github.io/SupplyChain/"
+baseurl: "./docs"
 
 # ------------ The following options are not recommended to be modified ------------------
 
