@@ -47,6 +47,9 @@ jobs:
         with:
           ruby-version: 3.3
           
+      - name: Run Bundler
+          run: bundle install
+        
       - name: Build site
         run: BUNDLE_GEMFILE="./docs/Gemfile" bundle exec jekyll b -d "_site${{ steps.pages.outputs.base_path }}"
         env:
