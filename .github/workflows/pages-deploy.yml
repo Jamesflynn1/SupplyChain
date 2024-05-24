@@ -50,7 +50,7 @@ jobs:
         run: bundle install
         
       - name: Build site
-        run: bundle exec jekyll b
+        run: bundle exec jekyll b -d
         env:
           JEKYLL_ENV: "production"
 
