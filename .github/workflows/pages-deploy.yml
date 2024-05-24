@@ -28,7 +28,7 @@ jobs:
     defaults:
       run:
         working-directory: ./docs
-      with:
+      uses:
         working-directory: ./docs
 
     steps:
