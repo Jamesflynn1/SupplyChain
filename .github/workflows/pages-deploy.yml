@@ -72,6 +72,8 @@ jobs:
     defaults:
       run:
         working-directory: ./docs
+      uses:
+        working-directory: ./docs
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
