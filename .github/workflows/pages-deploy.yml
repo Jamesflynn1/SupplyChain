@@ -28,26 +28,27 @@ jobs:
     defaults:
       run:
         working-directory: ./docs
-      uses:
-        working-directory: ./docs
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: true
+          path: "docs/"
           # If using the 'assets' git submodule from Chirpy Starter, uncomment above
           # (See: https://github.com/cotes2020/chirpy-starter/tree/main/assets)
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
+        with:
+          path: "docs/"
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.3
+          path: "docs/"
           
       - name: Run Bundler
         run: bundle install
@@ -71,8 +72,6 @@ jobs:
   deploy:
     defaults:
       run:
-        working-directory: ./docs
-      uses:
         working-directory: ./docs
     environment:
       name: github-pages
