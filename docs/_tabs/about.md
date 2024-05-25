@@ -10,7 +10,7 @@ Hi, I'm James and I am a joint Computer Science and Mathematics student at the U
 
 ## Project Background:
 
-This blog site is intended to showcase my [URSS project](https://warwick.ac.uk/services/skills/urss/) ". Here, I will apply core mathematical modelling principles and ideas to the real-world context of supply chains - and develop a concrete implementation with model parameters fitted to actual data.
+This blog site is intended to showcase my [URSS project](https://warwick.ac.uk/services/skills/urss/) "Modelling of Agricultural Supply Chains using Stochastic Supply Chain Models". Here, I will apply core mathematical modelling principles and ideas to the real-world context of supply chains - and develop a concrete implementation with model parameters fitted to actual data.
 
 While supply chain modelling is the focus here, the modelling tools and techniques introduced can be readily applied to other areas (for example, in epidemiology, financial markets, economics, physics, or chemistry).
 
@@ -30,4 +30,5 @@ This site is a work in progress, if you notice any typos or mistakes, feel free 
 For any questions, comments, or suggestions, please reach out! 
 
 Personal Email: jameswflynn@hotmail.co.uk
+
 University Email: james.w.flynn@warwick.ac.uk
