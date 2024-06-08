@@ -1,5 +1,5 @@
 import csv
-
+"""""
 class RulesetLoader():
     def __init__(self):
         self.rulesets = {}
@@ -18,52 +18,51 @@ class RulesetLoader():
             for rule_name in self.rulesets[ruleset_name]:
               if not rule_name in rule_names:
                   raise(ValueError(f"Ruleset Contains Rule {rule_name} with no definition found."))
-
-
+class Ruleset:
+    def __init__(self, ruleset):
+        self.rulesets = ruleset
+"""""
 
 class RulesLoader():
     def __init__(self):
 
     def loadRules (self, filepath):
 
-class Ruleset:
-    def __init__(self, ruleset):
-        self.rulesets = ruleset
+
 
 class Rule:
-    def __init__ (self, stoichiometry, propensity_function, target_stoichiometry = None, targets = None):
-        self.stoichiometry = stoichiometry
-        self.target_stoichiometry = target_stoichiometry
+    def __init__ (self, rule_id, propensity_function, target_stoichiometries, targets):
+        self.rule_id = rule_id
         self.propensity_function = propensity_function
         self.targets = targets
-        if not ((targets is None and target_stoichiometry is None) or
-            not (targets is None) and not(target_stoichiometry is None)):
+        if not ((targets is None and target_stoichiometries is None) or
+            not (targets is None) and not(target_stoichiometries is None)):
             if targets is None:
                 raise(ValueError("Define list of valid rule targets or remove target stoichiometry"))
             else:
                 raise(ValueError("Define valid target stoichiometry or list of valid rule targets"))
-        if len(targets) != len(target_stoichiometry):
+        if len(targets) != len(target_stoichiometries):
             raise(ValueError("Number of target stoichiometries must match the number of targets."))
    
 
-    def returnPropensity(self, compartment_values, targets_compartment_values = None):
-        return self.propensity_function(compartment_values, targets_compartment_values)
+    def returnPropensity(self, targets_compartment_values):
+        return self.propensity_function(targets_compartment_values)
     
     #TODO write to return source and target
-    def returnCompartmentChanges(self, compartment_values, targets_compartment_values = None):
-        return self.stoichiometry @ compartment_values
+    def returnCompartmentChanges(self, targets_compartment_values):
+        assert (len(targets_compartment_values) == len(self.target_stoichiometries))
+        return [self.target_stoichiometries[i] @ targets_compartment_values[i] for i in range(len(targets_compartment_values))]
     
     # APPLY the rule to the targets in the same order as they passed to the function here
     # Note the only only distinction of source and target is that the source location is where the rule is triggered.
-    def applyRule(self, source_location, target_locations = None):
-        if not self.targets is None:
-            self.validateTargets()
+    def applyRule(self, target_locations):
+        self.validateTargets(target_locations)
         value_change = self.returnCompartmentChanges()
-        source_location.add(value_change[0])
+        for i, location in enumerate(target_locations):
+            location.add(value_change[i])
 
     def validateTargets(self, target_locations):
-        """" Ensures that the locations that will be targeted (other than the source)
-        
+        """" Ensures that the locations that will be targeted (other than the source) match
         """
         assert(len(target_locations) == len(self.targets))
         for i, location in enumerate(target_locations):
