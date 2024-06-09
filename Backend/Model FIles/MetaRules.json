@@ -1,0 +1,76 @@
+{
+    "0": {
+        "name": "Transport Hydrogen",
+        "propensities": {
+            "0": [
+                1.0
+            ],
+            "1": [
+                1.0
+            ]
+        },
+        "propensity_types": {
+            "0": "linear",
+            "1": "linear"
+        },
+        "reduction": "product",
+        "required_classes": [
+            {
+                "0": "H2"
+            },
+            {
+                "0": "H2"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -2.0
+            ],
+            "1": [
+                2.0
+            ]
+        },
+        "stoichiometry_types": {
+            "0": "linear",
+            "1": "linear"
+        },
+        "target_types": [
+            "NitrogenPlant",
+            "AmmoniaPlant"
+        ]
+    },
+    "1": {
+        "name": "Test Ammonia Manufacturing",
+        "propensities": {
+            "0": [
+                3.0,
+                1.0,
+                1.0
+            ]
+        },
+        "propensity_types": {
+            "0": "linear"
+        },
+        "reduction": "product",
+        "required_classes": [
+            {
+                "0": "H2",
+                "1": "N2",
+                "2": "NH4"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -3.0,
+                -1.0,
+                1.0
+            ]
+        },
+        "stoichiometry_types": {
+            "0": "linear"
+        },
+        "target_types": [
+            "AmmoniaPlant"
+        ]
+    }
+}

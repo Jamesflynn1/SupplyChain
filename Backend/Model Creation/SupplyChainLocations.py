@@ -36,7 +36,7 @@ class Location:
         self.compartment_labels = set([])
 
     def returnDictDescription(self):
-        #For ease of use and to ensure compartment label order is invariant to order construction functions are called 
+        #For ease of use and to ensure compartment label order is invariant to order construction functions are called.
         ordered_comp_labels = sorted(self.compartment_labels)
         comp_label_mapping = {i:label for i, label in enumerate(ordered_comp_labels)}
 
@@ -133,7 +133,8 @@ class Locations:
 
         with open(filename, "w") as outfile:
             outfile.write(json_locations)
-
+        return locations_dict
+    
     def addCoordinates(self, lat, long):
         self.coords[0].append(lat)
         self.coords[1].append(long)

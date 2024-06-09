@@ -1,4 +1,3 @@
-import csv
 """""
 class RulesetLoader():
     def __init__(self):
