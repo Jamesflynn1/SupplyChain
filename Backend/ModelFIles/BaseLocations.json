@@ -1,0 +1,70 @@
+{
+    "0": {
+        "initial_values": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "label_mapping": {
+            "0": "H2",
+            "1": "N2",
+            "2": "NH4"
+        },
+        "lat": 1,
+        "long": 2,
+        "transport_distance": [
+            1883.1223071318907,
+            701.9169914473439,
+            701.9169914473439,
+            628.1718678556412
+        ],
+        "type": "ChemicalPlant AmmoniaPlant"
+    },
+    "1": {
+        "initial_values": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "label_mapping": {
+            "0": "H2",
+            "1": "N2",
+            "2": "NH4"
+        },
+        "lat": 7,
+        "long": 4,
+        "transport_distance": [
+            701.9169914473439,
+            628.1718678556412
+        ],
+        "type": "ChemicalPlant AmmoniaPlant"
+    },
+    "2": {
+        "initial_values": [
+            0.0,
+            0.0
+        ],
+        "label_mapping": {
+            "0": "CH4",
+            "1": "N2"
+        },
+        "lat": 2,
+        "long": 2,
+        "transport_distance": [],
+        "type": "ChemicalPlant NitrogenPlant"
+    },
+    "3": {
+        "initial_values": [
+            0.0,
+            0.0
+        ],
+        "label_mapping": {
+            "0": "CH4",
+            "1": "N2"
+        },
+        "lat": 2,
+        "long": 5,
+        "transport_distance": [],
+        "type": "ChemicalPlant NitrogenPlant"
+    }
+}

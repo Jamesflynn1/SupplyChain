@@ -35,8 +35,8 @@
             "1": "linear"
         },
         "target_types": [
-            "NitrogenPlant",
-            "AmmoniaPlant"
+            "ChemicalPlant NitrogenPlant",
+            "ChemicalPlant AmmoniaPlant"
         ]
     },
     "1": {
@@ -70,7 +70,7 @@
             "0": "linear"
         },
         "target_types": [
-            "AmmoniaPlant"
+            "ChemicalPlant AmmoniaPlant"
         ]
     }
 }
