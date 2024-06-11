@@ -42,7 +42,6 @@ def writeMatchedRuleJSON(rules, locations):
             rule_indices = correct_length_rules
 
             if not atleast_one_satisifying:
-                raise(ValueError(f"Rule {rule_i} has no satisying location for required type index{rule_targets_i}, type \
-                                 {rule["target_types"][rule_targets_i]}. Rule will never be trigger - remove rule"))
+                raise(ValueError(f"Rule {rule_i} has no satisying location for required type index{rule_targets_i}, type {str(rule['target_types'][rule_targets_i])}. Rule will never be trigger - remove rule"))
         filled_rules[rule_i] = rule_indices
     return filled_rules

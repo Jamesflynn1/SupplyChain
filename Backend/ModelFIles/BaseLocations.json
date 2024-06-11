@@ -13,10 +13,10 @@
         "lat": 1,
         "long": 2,
         "transport_distance": [
-            1883.1223071318907,
-            701.9169914473439,
-            701.9169914473439,
-            628.1718678556412
+            0.0,
+            702.6134537463248,
+            111.12511347447897,
+            351.29604275213194
         ],
         "type": "ChemicalPlant AmmoniaPlant"
     },
@@ -34,8 +34,10 @@
         "lat": 7,
         "long": 4,
         "transport_distance": [
-            701.9169914473439,
-            628.1718678556412
+            702.6134537463248,
+            0.0,
+            598.1463846996701,
+            566.5550358086163
         ],
         "type": "ChemicalPlant AmmoniaPlant"
     },
@@ -50,7 +52,12 @@
         },
         "lat": 2,
         "long": 2,
-        "transport_distance": [],
+        "transport_distance": [
+            111.12511347447897,
+            598.1463846996701,
+            0.0,
+            333.17221080622204
+        ],
         "type": "ChemicalPlant NitrogenPlant"
     },
     "3": {
@@ -64,7 +71,12 @@
         },
         "lat": 2,
         "long": 5,
-        "transport_distance": [],
+        "transport_distance": [
+            351.29604275213194,
+            566.5550358086163,
+            333.17221080622204,
+            0.0
+        ],
         "type": "ChemicalPlant NitrogenPlant"
     }
 }

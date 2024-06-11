@@ -23,9 +23,10 @@ def createEuclideanDistanceMatrix(lats, longs):
     distm = np.zeros((len(lats), len(lats)))
     for i in range(len(lats)):
         for h in range(i, len(longs)):
-            distm[i][h] = haversine(longs[i], longs[h], lats[i], lats[h])
+            distm[i][h] = haversine(longs[i], lats[i], longs[h],  lats[h])
     # Fill in the lower left triangle
     distm = distm.T+distm
+    print(distm)
     return distm
 
 # This class is used to create location data in contrast to the model Location class which is used to run the model.
@@ -119,14 +120,16 @@ class Locations:
         self.locations = []
     
     def writeJSON(self, filename):
+        print(self.coords)
         self.coords =  np.array(self.coords)
-        distance_matrix =  createEuclideanDistanceMatrix(self.coords[:,0], self.coords[:,1])
+        print(self.coords)
+        distance_matrix =  createEuclideanDistanceMatrix(self.coords[0,:], self.coords[1,:])
 
         locations_dict = {}
 
         for i, x in enumerate(self.locations):
             location_dict = x.returnDictDescription()
-            location_dict["transport_distance"] = list(distance_matrix[i:].flatten())
+            location_dict["transport_distance"] = list(distance_matrix[i,:].flatten())
             locations_dict[i] = location_dict
 
         json_locations = json.dumps(locations_dict, indent=4, sort_keys=True)
