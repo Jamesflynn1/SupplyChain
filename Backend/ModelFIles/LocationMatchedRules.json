@@ -1,0 +1,74 @@
+{
+    "0": {
+        "matching_indices": [
+            [
+                2,
+                0
+            ],
+            [
+                3,
+                0
+            ],
+            [
+                2,
+                1
+            ],
+            [
+                3,
+                1
+            ]
+        ],
+        "propensity": [
+            [
+                1.0,
+                1.0
+            ],
+            [
+                1.0,
+                1.0,
+                1.0
+            ]
+        ],
+        "rule_location_types": "ChemicalPlant NitrogenPlant_ChemicalPlant AmmoniaPlant",
+        "rule_name": "Transport Nitrogen",
+        "rule_num": 0,
+        "stoichiomety": [
+            [
+                0.0,
+                -2.0
+            ],
+            [
+                0.0,
+                2.0,
+                0.0
+            ]
+        ]
+    },
+    "1": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ]
+        ],
+        "propensity": [
+            [
+                3.0,
+                1.0,
+                1.0
+            ]
+        ],
+        "rule_location_types": "ChemicalPlant NitrogenPlant",
+        "rule_name": "Test Ammonia Manufacturing",
+        "rule_num": 1,
+        "stoichiomety": [
+            [
+                -3.0,
+                -1.0,
+                1.0
+            ]
+        ]
+    }
+}

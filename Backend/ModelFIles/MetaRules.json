@@ -1,6 +1,6 @@
 {
     "0": {
-        "name": "Transport Hydrogen",
+        "name": "Transport Nitrogen",
         "propensities": {
             "0": [
                 1.0
@@ -16,10 +16,10 @@
         "reduction": "product",
         "required_classes": [
             {
-                "0": "H2"
+                "0": "N2"
             },
             {
-                "0": "H2"
+                "0": "N2"
             }
         ],
         "stoichiometries": {
