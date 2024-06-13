@@ -2,6 +2,12 @@ import json
 import numpy as np
 
 def isSubtypeOf(parent_type, child_type):
+    """ Indicates whether the "child_type" rule type is a subtype of the parent_type.
+    
+    Current returns parent_type == child_type.
+
+    In the future this should be determined by a tree based hierachical graph.
+    """
     # Equality for the moment
     return parent_type == child_type
 
@@ -89,6 +95,18 @@ def obtainStochiometry(rule, locations):
 # Return the final propensity for a given rule provided concrete locations. 
 # Assumption that locations of the same type have the same compartments.
 def obtainPropensityAndStochiometry(rule, locations):
+    """ Remaps the rule to fit the class size found in each location
+    
+    Example: Original Rule mapping {0:"Class1", 1:"Class2"} (size of input to Stochiometry and Propensity functions: 2)
+    Location and Fitted Rule mapping {0:"ClassA", 1:"Class1", 2:"ClassB", 3:"Class2"}  (size of input to Stochiometry and Propensity functions: 4)
+
+
+    Parameters:
+        - rule: the Rule that we are remapping the propensity and stochiometry to fit each location.
+        - locations: location instances (a list the length of rule.types) that fit each of the rule.types.
+
+    Returns: [list of expanded propensities for all rule locations, list of expanded stochiometries for all rule locations]   
+    """
     # Rule
     propensities = rule["propensities"]
     stoichiometries = rule["stoichiometries"]
@@ -103,7 +121,7 @@ def obtainPropensityAndStochiometry(rule, locations):
         new_propensity= np.ones(len(new_label_mapping))
         new_stoichiometry = np.zeros(len(new_label_mapping))
 
-        # Ensure classes are unique
+        # TODO Ensure classes are unique
         for rule_class_index in range(len(current_class_mapping[rule_location])):
             class_found = False
             for location_class_index in range(len(new_label_mapping)):
