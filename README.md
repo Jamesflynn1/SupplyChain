@@ -16,7 +16,7 @@ I am fortunate and grateful to be supervised by [Markus Kirkilionis](https://war
 
 Hi, I'm James Flynn and I am a joint Computer Science and Mathematics student at the University of Warwick. 
 
-I am interested in exploring the field of mathematical modelling and it's relevance in the context of newer, computational and statistical methods. This is my primary motivator for this project, and I hope to share my findings here.
+I am interested in exploring the field of mathematical modelling and it's relevance in the context of newer, computational and statistical methods and this is my primary motivator for this project.
 
 ## Contact Me:
 
