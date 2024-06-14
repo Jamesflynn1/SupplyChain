@@ -11,10 +11,15 @@ class Location:
 
         self.initial_class_values = initial_class_values
         self.class_values = initial_class_values
+
     
     # Return True if updated successfully, False if negative on update.
     def updateCompartmentValues(self, new_values):
         self.class_values = new_values
+    
+    def reset(self):
+        self.class_values = self.initial_class_values
+
 class Rule:
     def __init__(self, propensity, stoichiometry, rule_name) -> None:
         assert (len(stoichiometry) == len(propensity))
@@ -62,3 +67,12 @@ class Rule:
         else:
 
             return False
+        
+class Trajectory:
+    def __init__(self) -> None:
+        self.timestamps = []
+        self.trajectory_location_values = []
+
+    def addEntry(self, time, location_values):
+        self.trajectory_location_values.append(location_values)
+        self.timestamps.append(time)
