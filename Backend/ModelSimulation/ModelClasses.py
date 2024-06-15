@@ -54,7 +54,7 @@ class Rule:
         negative = False
         new_class_values = []
         for loc_i, location in enumerate(locations):
-            new_location_values = self.locationAttemptCompartmentChange(location.class_values, loc_i, times_triggered)
+            new_location_values = self.locationAttemptedCompartmentChange(location.class_values, loc_i, times_triggered)
             if np.any(new_location_values<0):
                 negative = True
                 break
