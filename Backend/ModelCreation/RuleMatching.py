@@ -113,27 +113,24 @@ def obtainPropensityAndStochiometry(rule, locations):
 
     current_class_mapping = rule["required_classes"]
 
-    new_propensities = []
     new_stoichiometries = []
     # Locations
     for rule_location, location in enumerate(locations):
         new_label_mapping = location["label_mapping"]
-        new_propensity= np.ones(len(new_label_mapping))
         new_stoichiometry = np.zeros(len(new_label_mapping))
 
-        # TODO Ensure classes are unique
         for rule_class_index in range(len(current_class_mapping[rule_location])):
             class_found = False
             for location_class_index in range(len(new_label_mapping)):
                 if current_class_mapping[rule_location][rule_class_index] == new_label_mapping[location_class_index]:
-                    new_propensity[location_class_index] = propensities[rule_location][rule_class_index]
                     new_stoichiometry[location_class_index] = stoichiometries[rule_location][rule_class_index]
+                    # Only needs to happen once so can be placed here, possibly refactor
                     class_found = True
             if not class_found:
-                raise(ValueError("Rule class not found in location class in rule matching."))
-        new_propensities.append(list(new_propensity))
+                raise(ValueError("Rule class not found in location class in rule matching (missing stoichiometry class)."))
         new_stoichiometries.append(list(new_stoichiometry))
-    return [new_propensities, new_stoichiometries]
+        
+    return [propensities, new_stoichiometries]
 
 def writeMatchedRuleJSON(rules, locations, filename):
     matched_rules = returnRuleMatchingIndices(rules, locations)
@@ -143,7 +140,8 @@ def writeMatchedRuleJSON(rules, locations, filename):
     for rule_i in range(len(matched_rules)):
         concrete_rule_types = list(matched_rules[rule_i].keys())
         for concrete_rule_type in concrete_rule_types:
-            concrete_rule_dict = {"rule_num":rule_i, "rule_name":rules[rule_i]["name"], "rule_location_types":concrete_rule_type, "matching_indices":matched_rules[rule_i][concrete_rule_type]}
+            concrete_rule_dict = {"rule_num":rule_i, "rule_name":rules[rule_i]["name"], 
+                                  "rule_location_types":concrete_rule_type, "matching_indices":matched_rules[rule_i][concrete_rule_type]}
             # Assume all locations have the same classes - will be asserted in later versions.
             example_locations = []
             # Take the first set as an example

@@ -18,17 +18,14 @@
                 1
             ]
         ],
-        "propensity": [
-            [
-                1.0,
-                1.0
+        "propensity": {
+            "0": [
+                "1"
             ],
-            [
-                1.0,
-                1.0,
-                1.0
+            "1": [
+                "1"
             ]
-        ],
+        },
         "rule_location_types": "ChemicalPlant NitrogenPlant_ChemicalPlant AmmoniaPlant",
         "rule_name": "Transport Nitrogen",
         "rule_num": 0,
@@ -53,13 +50,12 @@
                 1
             ]
         ],
-        "propensity": [
-            [
-                3.0,
-                1.0,
-                1.0
+        "propensity": {
+            "0": [
+                "N2H2",
+                "1"
             ]
-        ],
+        },
         "rule_location_types": "ChemicalPlant NitrogenPlant",
         "rule_name": "Test Ammonia Manufacturing",
         "rule_num": 1,
