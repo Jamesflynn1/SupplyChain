@@ -43,5 +43,3 @@ class GillespieSolver(Solver):
         print(selected_rule)
         assert (self.rules[selected_rule].triggerAttemptedRuleChange(np.take(self.locations, self.matched_indices[selected_rule][selected_locations])))
         return current_time + u2
-
-        

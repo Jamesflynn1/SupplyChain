@@ -38,10 +38,11 @@ class Rule:
         subsitution_dict = {}
         for index in range(len(required_target_classes)):
             subsitution_dict[required_target_classes[index]] = 0
-        sympy_formula = sympy.parse_expr(formula)
-        res = sympy_formula.evalf(subs=subsitution_dict)
-        print(res)
+        res = formula.evalf(subs=subsitution_dict)
+        # We require that a numerical result is outputted and no symbols are left over.
+        assert(isinstance(res, (sympy.core.numbers.Float, sympy.core.numbers.Zero)))
         return True
+    
     def addSimplePropensityFunction(self, target_indices, values, required_target_classes):
         # Accepts matrix or constant values at the moment
         assert(len(target_indices) == len(values))
@@ -51,10 +52,16 @@ class Rule:
             if not self.propensities[index] is None:
                 raise(ValueError(f"Overwriting already set propensity is forbidden. Target location {self.targets[index]} at position {str(index+1)}"))
 
-            if isinstance(value[0], str):
+            if isinstance(value, str):
                 # TODO validate formula here
                 #self.propensity_types[index] = "formula"
+                # We expect that the array has a single entry.
                 print("FORM")
+                sympy_formula = sympy.parse_expr(value)
+
+                self.validateFormula(sympy_formula, required_target_classes[index])
+                #self.
+
                 
             else:
                 raise(ValueError(f"Unrecognised propensity function of type {type(values[i])}, for target index {index}"))

@@ -29,12 +29,12 @@ class ModelDefinition:
     
         # Move Hydrogen from a supplier
         all_rules.addTransportRule(source="ChemicalPlant NitrogenPlant",target="ChemicalPlant AmmoniaPlant", 
-                                   transport_class="N2", propensities=[["1"],["1"]], transport_amount=2,
+                                   transport_class="N2", propensities=["1","1"], transport_amount=2,
                                    propensity_classes=[["N2"], ["N2"]], name="Transport Nitrogen")
 
         all_rules.addSingleLocationProductionRule(target="ChemicalPlant AmmoniaPlant",
                                                   reactant_classes=["N2","H2"], reactant_amount=[1,3], 
-                                                  product_classes=["NH4"],product_amount=[1],propensity=["N2H2","1"],
+                                                  product_classes=["NH4"],product_amount=[1],propensity="N2*H2",
                                                   propensity_classes=["N2", "H2"], name="Test Ammonia Manufacturing")      
           
         self.rules = all_rules.writeJSON(f"{self.model_folder}{self.metarule_filename}")

@@ -2,12 +2,8 @@
     "0": {
         "name": "Transport Nitrogen",
         "propensities": {
-            "0": [
-                "1"
-            ],
-            "1": [
-                "1"
-            ]
+            "0": "1",
+            "1": "1"
         },
         "reduction": "product",
         "required_classes": [
@@ -34,10 +30,7 @@
     "1": {
         "name": "Test Ammonia Manufacturing",
         "propensities": {
-            "0": [
-                "N2H2",
-                "1"
-            ]
+            "0": "N2*H2"
         },
         "reduction": "product",
         "required_classes": [
