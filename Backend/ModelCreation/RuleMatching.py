@@ -66,35 +66,21 @@ def returnRuleMatchingIndices(rules, locations):
         filled_rules[rule_i] = rule_indices
     return filled_rules
 
-# Return the final stoichiometry for a given rule provided a concrete location set.
-def obtainStochiometry(rule, locations):
-    # Rule
-    stoichiometries = rule["stoichiometries"]
-    current_class_mapping = rule["required_classes"]
-
-    new_stoichiometries = []
-    # Locations
-    for rule_location, location in enumerate(locations):
-        new_label_mapping = location["label_mapping"]
-        new_stoichiometry = np.zeros(len(new_label_mapping))
-
-        # Ensure classes are unique
-        print(current_class_mapping)
-        for rule_class_index in range(len(current_class_mapping[rule_location])):
-            for location_class_index in range(len(new_label_mapping)):
-                #print(current_class_mapping[rule_class_index])
-                print(f"###{rule_location}")
-                print(current_class_mapping[rule_location][rule_class_index])
-                print(new_label_mapping[location_class_index])
-                print(stoichiometries[rule_location][rule_class_index])
-                print("###")
-                if current_class_mapping[rule_location][rule_class_index] == new_label_mapping[location_class_index]:
-                    new_stoichiometry[location_class_index] = stoichiometries[rule_location][rule_class_index]
-        new_stoichiometries.append(list(new_stoichiometry))
-    return new_stoichiometries
 # Return the final propensity for a given rule provided concrete locations. 
 # Assumption that locations of the same type have the same compartments.
-def obtainPropensityAndStochiometry(rule, locations):
+def obtainPropensity(rule, locations):
+    propensities = rule["propensities"]
+    new_propensities = []
+    for location_i, location in enumerate(locations):
+        new_propensity = propensities[location_i]
+        new_label_mapping = location["label_mapping"]
+        for label_i in list(new_label_mapping.keys()):
+            new_propensity = new_propensity.replace(new_label_mapping[label_i], f"x{label_i}")
+        new_propensities.append(new_propensity)
+    print(new_propensities)
+    return new_propensities
+
+def obtainStochiometry(rule, locations):
     """ Remaps the rule to fit the class size found in each location
     
     Example: Original Rule mapping {0:"Class1", 1:"Class2"} (size of input to Stochiometry and Propensity functions: 2)
@@ -105,10 +91,9 @@ def obtainPropensityAndStochiometry(rule, locations):
         - rule: the Rule that we are remapping the propensity and stochiometry to fit each location.
         - locations: location instances (a list the length of rule.types) that fit each of the rule.types.
 
-    Returns: [list of expanded propensities for all rule locations, list of expanded stochiometries for all rule locations]   
+    Returns: list of expanded stochiometries for all rule locations  
     """
     # Rule
-    propensities = rule["propensities"]
     stoichiometries = rule["stoichiometries"]
 
     current_class_mapping = rule["required_classes"]
@@ -130,7 +115,7 @@ def obtainPropensityAndStochiometry(rule, locations):
                 raise(ValueError("Rule class not found in location class in rule matching (missing stoichiometry class)."))
         new_stoichiometries.append(list(new_stoichiometry))
         
-    return [propensities, new_stoichiometries]
+    return new_stoichiometries
 
 def writeMatchedRuleJSON(rules, locations, filename):
     matched_rules = returnRuleMatchingIndices(rules, locations)
@@ -149,7 +134,8 @@ def writeMatchedRuleJSON(rules, locations, filename):
                 example_locations.append(locations[location_index])
             
             # TODO ensure compatibility with further propensity functions
-            concrete_rule_dict["propensity"],  concrete_rule_dict["stoichiomety"] = obtainPropensityAndStochiometry(rules[rule_i], example_locations)
+            concrete_rule_dict["stoichiomety"] = obtainStochiometry(rules[rule_i], example_locations)
+            concrete_rule_dict["propensity"] = obtainPropensity(rules[rule_i], example_locations)
             concrete_match_rules_dict[concrete_rules] = concrete_rule_dict
             concrete_rules+= 1
     

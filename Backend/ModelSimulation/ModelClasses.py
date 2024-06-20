@@ -1,5 +1,7 @@
 from typing import Any
 import numpy as np
+import sympy
+
 
 class Location:
     def __init__ (self, lat, long, loc_type, label_mapping, transport_distance, initial_class_values):
@@ -23,16 +25,23 @@ class Location:
 class Rule:
     def __init__(self, propensity, stoichiometry, rule_name) -> None:
         assert (len(stoichiometry) == len(propensity))
-        if isinstance(propensity, (list, np.ndarray)):
-            self.propensity_matrix = propensity
+        if isinstance(propensity, (list)):
+            self.sympy_formula = [sympy.parse_expr(prop_str) for prop_str in propensity]
+            self.lambda_propensities = []
+            for loc_i, formula in enumerate(self.sympy_formula):
+                symbol_string = ''.join([f'x{str(i)} ' for i in range(len(stoichiometry[loc_i]))])
+                formula_symbols = sympy.symbols(symbol_string, real=True)
+                #symbols = sympy.symbols("".join([f"x{i} " for i in range(len(stoichiometry[loc_i]))]) , real=True)
+                #M = sympy.IndexedBase('x', shape=(dim))
+            
+                #symbols = [f"x{i}" for i in range(len(stoichiometry[loc_i]))]
+                f=sympy.lambdify(formula_symbols, formula, "numpy")
+                self.lambda_propensities.append(f)
             self.propensity_function = lambda x, loc : np.dot(x, self.propensity_matrix[loc])
         else:
             raise(ValueError("Unsupported Propensity in Model Loading"))
         self.rule_name = rule_name
         self.stoichiometry = stoichiometry
-
-    def locationPropensity(self, class_values, location_index):
-        return self.propensity_function(class_values, location_index)
     
     def locationAttemptedCompartmentChange(self, class_values, location_index, times_triggered):
         new_values = class_values + times_triggered*self.stoichiometry[location_index]
@@ -43,7 +52,9 @@ class Rule:
         # Assume product operation.
         propensity = 1
         for loc_i, location in enumerate(locations):
-            propensity *= self.locationPropensity(location.class_values, loc_i)
+            print(location.class_values[:])
+            propensity *= self.lambda_propensities[loc_i](*location.class_values)
+        print(propensity)
         assert (propensity >= 0)
         return propensity
     

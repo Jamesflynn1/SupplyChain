@@ -2,6 +2,8 @@ import ModelClasses
 import ModelSolvers
 import ModelLoader
 
+import matplotlib.pyplot as plt
+
 # We don't require that all locations have the same compartments, only that 
 
 class ModelBackend:
@@ -44,4 +46,4 @@ class ModelBackend:
         return self.trajectory
 
 application = ModelBackend()
-print(application.simulate(3).trajectory_location_values)
+out = application.simulate(7).trajectory_location_values

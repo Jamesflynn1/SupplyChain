@@ -44,7 +44,7 @@ def loadMatchedRules(matched_rules_filename):
         for loc_stoichiometry in rules_dict["stoichiomety"]:
             stochiometries.append(np.array(loc_stoichiometry))
         for loc_propensity in rules_dict["propensity"]:
-            propensities.append(np.array(loc_propensity))
+            propensities.append(loc_propensity)
 
         rule = ModelClasses.Rule(propensity=propensities, stoichiometry=stochiometries, rule_name=rules_dict["rule_name"])
         applicable_indices.append(rules_dict["matching_indices"])
