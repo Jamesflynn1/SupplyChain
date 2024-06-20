@@ -1,0 +1,19 @@
+- Added locations and rules class
+- Added basic verification on locations and rules (e.g. )
+- Matched rules - if locations matches the required types a rule is created for the concrete locations.
+- Load and save rules and locations.
+- Model run code - outputs a trajectory.
+- Exact Gillespie implementation using loaded model data.
+
+Todo:
+- Basic rules for nitrogen fertiliser.
+- More location characteristics (e.g. farmland size, ...)
+- Fix the new formula method for propensity functions (e.g so that a formula can be typed and converted into a function using sympy)
+- Start technical report.
+- First blog entry.
+
+- Meeting Discussion:
+Focus on Wheat to start - go upto bread production
+Regional farms
+Water, soil quality
+Conversions, productions, assembelling.

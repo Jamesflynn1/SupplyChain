@@ -150,6 +150,13 @@ class Rules:
         new_rule.addLinearStoichiomety([0], [target_stochiometry], [reactant_classes+product_classes])
         new_rule.addSimplePropensityFunction([0], [propensity], [propensity_classes])
         self.rules.append(new_rule)
+    def addOutOfSystemInboundRule(self, target, transport_class, transport_amount,
+                                  propensity, propensity_classes, name):
+        new_rule = Rule(name, [target])
+        target_stochiometry = [transport_amount]
+        new_rule.addLinearStoichiomety([0], [target_stochiometry], [transport_class])
+        new_rule.addSimplePropensityFunction([0], [propensity], [propensity_classes])
+        self.rules.append(new_rule)
     
     #TODO REDO WITHOUT INDEX DEPS
     def writeJSON(self, filename):
