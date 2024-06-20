@@ -56,12 +56,9 @@ class Rule:
                 # TODO validate formula here
                 #self.propensity_types[index] = "formula"
                 # We expect that the array has a single entry.
-                print("FORM")
                 sympy_formula = sympy.parse_expr(value)
 
                 self.validateFormula(sympy_formula, required_target_classes[index])
-                #self.
-
                 
             else:
                 raise(ValueError(f"Unrecognised propensity function of type {type(values[i])}, for target index {index}"))

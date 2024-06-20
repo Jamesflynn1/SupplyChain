@@ -1,172 +1,159 @@
-import numpy as np
-import sympy
 import json
+import numpy as np
 
-class Rule:
-    def __init__(self, rule_name, targets, reduction = "product"):
-
-        self.rule_name = rule_name
-
-        self.targets = targets
-        # Stochiometries/propensities are with respect
-        self.stoichiometies = {i:None for i in range(len(targets))}
-        self.propensities = {i:None for i in range(len(targets))}
-        #self.propensity_types = {i:None for i in range(len(targets))}
-        #self.stoichiomety_types = {i:None for i in range(len(targets))}
-
-        self.rule_classes = {i:None for i in range(len(targets))}
-        self.stoichiomety_classes = {i:None for i in range(len(targets))}
-        self.propensity_classes = {i:None for i in range(len(targets))}
-
-        self.reduction = reduction
-        # ADD CHECKING
+def isSubtypeOf(parent_type, child_type):
+    """ Indicates whether the "child_type" rule type is a subtype of the parent_type.
     
-    def addLinearStoichiomety(self, target_indices, stoichiometies, required_target_classes):
-        assert(len(target_indices) == len(stoichiometies))
-        for i, index in enumerate(target_indices):
-            stoichiometry = stoichiometies[i]
-            if not self.stoichiometies[index] is None:
-                raise(ValueError(f"Overwriting already set stoichiomety is forbidden. Target location {self.targets[index]} at position {str(index+1)}"))
-            if isinstance(stoichiometry, (np.ndarray, list)):
-                #self.stoichiomety_types[index] = "linear"
-                self.stoichiometies[index] = list(stoichiometry)
-                self.stoichiomety_classes[index] = required_target_classes[i]
+    Current returns parent_type == child_type.
+
+    In the future this should be determined by a tree based hierachical graph.
+    """
+    # Equality for the moment
+    return parent_type == child_type
+
+def returnRuleMatchingIndices(rules, locations):
+    # For each rule, on each type that matches a general type
+    filled_rules = {i:[] for i in range(len(rules))}
+    for rule_i in range(len(rules)):
+        rule = rules[rule_i]
+        matchedTypeToIndices = {i:[] for i in range(len(rule["target_types"]))}
+        # Check all locations to see which locations correspond to which required types by the rule.
+        # (note, a rule may correspond to multiple required types but it can only be used in one slot).
+
+        # We obtain a dictionary mapping each required location type to a list of fufilling indices in our location set.
+        for location_i in range(len(locations)):
+            for rule_targets_i in range(len(rule["target_types"])):
+                if isSubtypeOf(rule["target_types"][rule_targets_i], locations[location_i]["type"]):
+                    matchedTypeToIndices[rule_targets_i].append(location_i)
+        # From the previously described location set, obtain a tuple of indices (if it exists) that satisfies the rule.
+        # Do this iteratively, loop over all index sets in construction and add the new index if it isn't already inside.
+        print(f"MATCHED {matchedTypeToIndices}")
+        rule_indices = {}
+        for rule_targets_i in range(len(rule["target_types"])):
+            atleast_one_satisifying = False
+            if len(rule_indices) == 0:
+                if len(matchedTypeToIndices[0])>0:
+                    for mtti in matchedTypeToIndices[0]:
+                        if not locations[location_i]["type"] in  rule_indices.keys():
+                             rule_indices[locations[location_i]["type"]] = []
+                        rule_indices[locations[location_i]["type"]].append([mtti])
+                    atleast_one_satisifying = True
             else:
-                raise(ValueError(f"Unrecognised stoichiomety of type {type(stoichiometies[i])}, for target index {index}"))
-    def validateFormula(self, formula, required_target_classes):
-        # Evaluate when all classes are 0
-        subsitution_dict = {}
-        for index in range(len(required_target_classes)):
-            subsitution_dict[required_target_classes[index]] = 0
-        sympy_formula = sympy.parse_expr(formula)
-        res = sympy_formula.evalf(subs=subsitution_dict)
-        print(res)
-        return True
-    def addSimplePropensityFunction(self, target_indices, values, required_target_classes):
-        # Accepts matrix or constant values at the moment
-        assert(len(target_indices) == len(values))
-        for i, index in enumerate(target_indices):
-            value = values[i]
-            print(value)
-            if not self.propensities[index] is None:
-                raise(ValueError(f"Overwriting already set propensity is forbidden. Target location {self.targets[index]} at position {str(index+1)}"))
+                # Every index that can be subbed in at that place.
+                # We keep a dictionary here so we can map explict types.
+                correct_length_rules = {}
+                for loc_index in matchedTypeToIndices[rule_targets_i]:
+                    rule_keys = list(rule_indices.keys())
+                    # Which explict types are being used.
+                    for rule_key in rule_keys:
+                        for index_matching in rule_indices[rule_key]:
+                            if not loc_index in index_matching:
+                                if not rule_key+"_"+locations[loc_index]["type"] in list(correct_length_rules.keys()):
+                                    correct_length_rules[rule_key+"_"+locations[loc_index]["type"]] = [index_matching+[loc_index]]
+                                else:
+                                    correct_length_rules[rule_key+"_"+locations[loc_index]["type"]].append(index_matching+[loc_index])
+                                atleast_one_satisifying = True
+                rule_indices = correct_length_rules
 
-            if isinstance(value[0], str):
-                # TODO validate formula here
-                #self.propensity_types[index] = "formula"
-                print("FORM")
-                
-            else:
-                raise(ValueError(f"Unrecognised propensity function of type {type(values[i])}, for target index {index}"))
-            self.propensity_classes[index] = required_target_classes[i]
-            self.propensities[index] = value
+            # Prune rules that will never able to be completed to reduce size.
+            #correct_length_rules = [] 
+            #for rule_index in rule_indices:
+                #if len(rule_index) == rule_targets_i+1:
+                    #correct_length_rules.append(rule_index)
 
-    def checkRuleDefinition(self):
-        for i in range(len(self.targets)):
-            if self.stoichiometies[i] is None:
-                raise(ValueError(f"The Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry."))
-            elif self.propensities[i] is None:
-                raise(ValueError(f"The Location type {self.targets[i]} at rule position {str(i+1)} has no defined propensity."))
-            #elif self.propensity_types[i] is None:
-            #    raise(ValueError(f"The Location type {self.targets[i]} at rule position {str(i+1)} has no defined propensity type."))
-            #elif self.stoichiomety_types is None:
-            #    raise(ValueError(f"The Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry type."))
-        if self.reduction not in ["product", "sum"]:
-            raise(ValueError("The only supported reduction opperations are 'product' and 'sum' at the moment"))
-    def mergeClassLists(self):
-        # Maps new index to class label
-        self.rule_classes = []
-        for i, target in enumerate(self.targets):
-            sorted_classes = sorted(set(self.propensity_classes[i] + self.stoichiomety_classes[i]))
-            tmp_rule_class_dict = {i:comp_class for i, comp_class in enumerate(sorted_classes)}
-            # Might be better to remap inputs for more complex functions rather than directly changing the definition of the function.
-                # Use additive identity here
-            new_stoichiometry = np.zeros(len(sorted_classes))
-            for h, old_class in enumerate(self.stoichiomety_classes[i]):
-                for j in range(len(tmp_rule_class_dict)):
-                    if old_class == tmp_rule_class_dict[j]:
-                        new_stoichiometry[j] = self.stoichiometies[i][h]
-            self.stoichiometies[i] = list(new_stoichiometry)
-            self.rule_classes.append(tmp_rule_class_dict)
-        
-    def returnRuleDict(self):
-        self.checkRuleDefinition()
-        self.mergeClassLists()
+            if not atleast_one_satisifying:
+                raise(ValueError(f"Rule {rule_i} has no satisying location for required type index{rule_targets_i}, type {str(rule['target_types'][rule_targets_i])}. Rule will never be trigger - remove rule"))
+        filled_rules[rule_i] = rule_indices
+    return filled_rules
 
-        # UNPACK DEF TO SPECIFIC LOCATION
-        rule_dict = {"name":self.rule_name, "reduction":self.reduction, "target_types":self.targets, "required_classes":self.rule_classes,
-                     "stoichiometries":self.stoichiometies, "propensities":self.propensities
-                     }
-        return rule_dict
+# Return the final stoichiometry for a given rule provided a concrete location set.
+def obtainStochiometry(rule, locations):
+    # Rule
+    stoichiometries = rule["stoichiometries"]
+    current_class_mapping = rule["required_classes"]
 
+    new_stoichiometries = []
+    # Locations
+    for rule_location, location in enumerate(locations):
+        new_label_mapping = location["label_mapping"]
+        new_stoichiometry = np.zeros(len(new_label_mapping))
 
-class Rules:
-    def __init__(self):
-        self.rules = []
-
-    def addSingleLocationSimpleRule(self, target, propensity, stoichiomety,  
-                                    propensity_classes, stoichiomety_classes,
-                                    name = "Unnamed single location rule"):
-        new_rule = Rule(name, [target])
-        new_rule.addLinearStoichiomety(0, [stoichiomety], [stoichiomety_classes])
-        new_rule.addSimplePropensityFunction(0, [propensity], [propensity_classes])
-        self.rules.append(new_rule)
+        # Ensure classes are unique
+        print(current_class_mapping)
+        for rule_class_index in range(len(current_class_mapping[rule_location])):
+            for location_class_index in range(len(new_label_mapping)):
+                #print(current_class_mapping[rule_class_index])
+                print(f"###{rule_location}")
+                print(current_class_mapping[rule_location][rule_class_index])
+                print(new_label_mapping[location_class_index])
+                print(stoichiometries[rule_location][rule_class_index])
+                print("###")
+                if current_class_mapping[rule_location][rule_class_index] == new_label_mapping[location_class_index]:
+                    new_stoichiometry[location_class_index] = stoichiometries[rule_location][rule_class_index]
+        new_stoichiometries.append(list(new_stoichiometry))
+    return new_stoichiometries
+# Return the final propensity for a given rule provided concrete locations. 
+# Assumption that locations of the same type have the same compartments.
+def obtainPropensityAndStochiometry(rule, locations):
+    """ Remaps the rule to fit the class size found in each location
     
-    def addTransportRule(self, source, target, transport_class,
-                          propensities, transport_amount, propensity_classes,
-                          name = "Unnamed transport rule"):
-        assert(len(propensities) == 2)
-        assert(len(propensity_classes) == 2)
-        new_rule = Rule(name, [source, target])
+    Example: Original Rule mapping {0:"Class1", 1:"Class2"} (size of input to Stochiometry and Propensity functions: 2)
+    Location and Fitted Rule mapping {0:"ClassA", 1:"Class1", 2:"ClassB", 3:"Class2"}  (size of input to Stochiometry and Propensity functions: 4)
 
-        source_stochiometry = np.zeros(1)
-        source_stochiometry[0] = -transport_amount
 
-        target_stochiometry = np.zeros(1)
-        target_stochiometry[0] = transport_amount
+    Parameters:
+        - rule: the Rule that we are remapping the propensity and stochiometry to fit each location.
+        - locations: location instances (a list the length of rule.types) that fit each of the rule.types.
 
-        new_rule.addLinearStoichiomety([0, 1], [source_stochiometry, target_stochiometry], [[transport_class], [transport_class]])
-        new_rule.addSimplePropensityFunction([0, 1], propensities, propensity_classes)
-        self.rules.append(new_rule)
+    Returns: [list of expanded propensities for all rule locations, list of expanded stochiometries for all rule locations]   
+    """
+    # Rule
+    propensities = rule["propensities"]
+    stoichiometries = rule["stoichiometries"]
 
-    def addSingleLocationProductionRule(self, target,
-                                        reactant_classes, reactant_amount,
-                                        product_classes, product_amount,
-                                        propensity, propensity_classes,
-                                        name = "Unnamed production rule"):
-        # Ensure our indices our within bounds
+    current_class_mapping = rule["required_classes"]
 
-        new_rule = Rule(name, [target])
-        reactants_len = len(reactant_classes)
-        product_len = len(product_classes)
-        assert(len(set(reactant_classes+product_classes)) == reactants_len+product_len)
-        target_stochiometry = np.zeros(reactants_len+product_len)
+    new_stoichiometries = []
+    # Locations
+    for rule_location, location in enumerate(locations):
+        new_label_mapping = location["label_mapping"]
+        new_stoichiometry = np.zeros(len(new_label_mapping))
 
-        for i in range(reactants_len):
-            target_stochiometry[i] = -reactant_amount[i]
-
-        for i  in range(product_len):
-            target_stochiometry[i+reactants_len] = product_amount[i]
-        new_rule.addLinearStoichiomety([0], [target_stochiometry], [reactant_classes+product_classes])
-        new_rule.addSimplePropensityFunction([0], [propensity], [propensity_classes])
-        self.rules.append(new_rule)
-    def addOutOfSystemInboundRule(self, target, transport_class, transport_amount,
-                                  propensity, propensity_classes, name):
-        new_rule = Rule(name, [target])
-        target_stochiometry = [transport_amount]
-        new_rule.addLinearStoichiomety([0], [target_stochiometry], [transport_class])
-        new_rule.addSimplePropensityFunction([0], [propensity], [propensity_classes])
-        self.rules.append(new_rule)
-    
-    #TODO REDO WITHOUT INDEX DEPS
-    def writeJSON(self, filename):
-        rules_dict = {}
-        for i, rule in enumerate(self.rules):
-            rule_dict = rule.returnRuleDict()
-            rules_dict[i] = rule_dict
+        for rule_class_index in range(len(current_class_mapping[rule_location])):
+            class_found = False
+            for location_class_index in range(len(new_label_mapping)):
+                if current_class_mapping[rule_location][rule_class_index] == new_label_mapping[location_class_index]:
+                    new_stoichiometry[location_class_index] = stoichiometries[rule_location][rule_class_index]
+                    # Only needs to happen once so can be placed here, possibly refactor
+                    class_found = True
+            if not class_found:
+                raise(ValueError("Rule class not found in location class in rule matching (missing stoichiometry class)."))
+        new_stoichiometries.append(list(new_stoichiometry))
         
-        json_rules = json.dumps(rules_dict, indent=4, sort_keys=True)
+    return [propensities, new_stoichiometries]
 
-        with open(filename, "w") as outfile:
-            outfile.write(json_rules)
-        return rules_dict
+def writeMatchedRuleJSON(rules, locations, filename):
+    matched_rules = returnRuleMatchingIndices(rules, locations)
+    
+    concrete_match_rules_dict = {}
+    concrete_rules = 0
+    for rule_i in range(len(matched_rules)):
+        concrete_rule_types = list(matched_rules[rule_i].keys())
+        for concrete_rule_type in concrete_rule_types:
+            concrete_rule_dict = {"rule_num":rule_i, "rule_name":rules[rule_i]["name"], 
+                                  "rule_location_types":concrete_rule_type, "matching_indices":matched_rules[rule_i][concrete_rule_type]}
+            # Assume all locations have the same classes - will be asserted in later versions.
+            example_locations = []
+            # Take the first set as an example
+            for location_index in matched_rules[rule_i][concrete_rule_type][0]:
+                example_locations.append(locations[location_index])
+            
+            # TODO ensure compatibility with further propensity functions
+            concrete_rule_dict["propensity"],  concrete_rule_dict["stoichiomety"] = obtainPropensityAndStochiometry(rules[rule_i], example_locations)
+            concrete_match_rules_dict[concrete_rules] = concrete_rule_dict
+            concrete_rules+= 1
+    
+    json_concrete_rules = json.dumps(concrete_match_rules_dict, indent=4, sort_keys=True)
+    with open(filename, "w") as outfile:
+        outfile.write(json_concrete_rules)
+    return concrete_match_rules_dict
