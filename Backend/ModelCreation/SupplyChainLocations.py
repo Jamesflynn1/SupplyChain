@@ -30,9 +30,10 @@ def createEuclideanDistanceMatrix(lats, longs):
 
 # This class is used to create location data in contrast to the model Location class which is used to run the model.
 class Location:
-    def __init__(self, lat, long):
+    def __init__(self, lat, long, name):
         self.lat = lat
         self.long = long
+        self.name = name
         self.compartment_labels = set([])
 
     def returnDictDescription(self):
@@ -44,8 +45,8 @@ class Location:
     
 # To define a basic model, we need the locations and rules file.
 class ChemicalPlant(Location):
-    def __init__(self, lat, long):
-        super().__init__(lat, long)
+    def __init__(self, lat, long, name):
+        super().__init__(lat, long, name)
         self.added_processing = {"Ammonia" : False, "Nitrogen" : False}
         self.type = "ChemicalPlant"
 
@@ -76,30 +77,13 @@ class ChemicalPlant(Location):
         generic_dict["type"] = self.type
         return generic_dict
     
-class Farm(Location):
-    def __init__(self, lat, long, demand):
+class FarmRegion(Location):
+    def __init__(self, lat, long, name):
         # Sets lat/long and creates and empty set of compartment labels.
-        super().__init__(lat, long)
+        super().__init__(lat, long, name)
         self.added_crops = {"Wheat" : False, "Barley" : False}
-        self.type = "Farm"
+        self.type = "FarmRegion"
 
-    def addWheat(self):
-        if self.added_processing["Wheat"] == False:
-            self.type += " WheatFarm"
-            self.compartment_labels.add("NH4")
-            self.compartment_labels.add("Wheat")
-            self.added_processing["Wheat"] = True
-        else:
-            raise(ValueError("Already added Wheat crop"))
-        
-    def addBarley(self):
-        if self.added_processing["Barley"] == False:
-            self.type += " BarleyFarm"
-            self.compartment_labels.add("NH4")
-            self.compartment_labels.add("Barley")
-            self.added_processing["Barley"] = True
-        else:
-            raise(ValueError("Already added Barley crop"))
         
     def returnDictDescription(self, initial_conds=None):
         generic_dict  = super().returnDictDescription()
@@ -139,17 +123,17 @@ class Locations:
         self.coords[0].append(lat)
         self.coords[1].append(long)
 
-    def addSingleChemicalPlant(self, lat, long, type):
-        new_plant = ChemicalPlant(lat, long)
-        if type == "Ammonia":
+    def addSingleChemicalPlant(self, lat, long, loc_type, name):
+        new_plant = ChemicalPlant(lat, long, name)
+        if loc_type == "Ammonia":
             new_plant.addAmmoniaManufacturing()
-        elif type == "Nitrogen":
+        elif loc_type == "Nitrogen":
             new_plant.addNitrogenManufacturing()
         self.locations.append(new_plant)
         self.addCoordinates(lat, long)
 
-    def addFarm(self, lat, long):
-        new_plant = ChemicalPlant(lat, long)
+    def addFarmRegion(self, lat, long, name):
+        new_plant = ChemicalPlant(lat, long, name)
         if type == "Ammonia":
             new_plant.addAmmoniaManufacturing()
         elif type == "Nitrogen":

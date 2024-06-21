@@ -43,9 +43,9 @@ class ModelDefinition:
         RuleMatching.writeMatchedRuleJSON(self.rules, self.locations, f"{self.model_folder}{self.matched_rules_filename}")
     
     def build(self):
-        model.createLocations()
-        model.createRules()
-        model.matchRules()
+        self.createLocations()
+        self.createRules()
+        self.matchRules()
 
 model = ModelDefinition()
 model.build()
