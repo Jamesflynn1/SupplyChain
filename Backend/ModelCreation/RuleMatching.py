@@ -1,3 +1,7 @@
+""" Generic framework to match metarules to locations, find all location indices that match and rewrite the propensities and stoichiometries to use array indices.
+
+"""
+
 import json
 import numpy as np
 
