@@ -13,7 +13,7 @@ class Rule:
         self.propensities = {i:None for i in range(len(targets))}
 
         self.rule_classes = {i:None for i in range(len(targets))}
-        self.stoichiomety_classes = {i:None for i in range(len(targets))}
+        self.stoichiometry_classes = {i:None for i in range(len(targets))}
         self.propensity_classes = {i:None for i in range(len(targets))}
 
     def addLinearStoichiomety(self, target_indices, stoichiometies, required_target_classes):
@@ -24,7 +24,7 @@ class Rule:
                 raise(ValueError(f"Overwriting already set stoichiomety is forbidden. Target location {self.targets[index]} at position {str(index+1)}"))
             elif isinstance(stoichiometry, (np.ndarray, list)):
                 self.stoichiometies[index] = list(stoichiometry)
-                self.stoichiomety_classes[index] = required_target_classes[i]
+                self.stoichiometry_classes[index] = required_target_classes[i]
             else:
                 raise(ValueError(f"Unrecognised stoichiomety of type {type(stoichiometies[i])}, for target index {index}"))
     
@@ -61,20 +61,24 @@ class Rule:
     def checkRuleDefinition(self):
         for i in range(len(self.targets)):
             if self.stoichiometies[i] is None:
-                raise(ValueError(f"The Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry."))
+                raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry."))
             elif self.propensities[i] is None:
-                raise(ValueError(f"The Location type {self.targets[i]} at rule position {str(i+1)} has no defined propensity."))
+                raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined propensity."))
+            elif self.propensity_classes[i] is None:
+                raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined propensity class requirement."))
+            elif self.stoichiometry_classes[i] is None:
+                raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry class requirement."))
             
     def mergeClassLists(self):
         # Maps new index to class label
         self.rule_classes = []
         for i, target in enumerate(self.targets):
-            sorted_classes = sorted(set(self.propensity_classes[i] + self.stoichiomety_classes[i]))
+            sorted_classes = sorted(set(self.propensity_classes[i] + self.stoichiometry_classes[i]))
             tmp_rule_class_dict = {i:comp_class for i, comp_class in enumerate(sorted_classes)}
             # Might be better to remap inputs for more complex functions rather than directly changing the definition of the function.
                 # Use additive identity here
             new_stoichiometry = np.zeros(len(sorted_classes))
-            for h, old_class in enumerate(self.stoichiomety_classes[i]):
+            for h, old_class in enumerate(self.stoichiometry_classes[i]):
                 for j in range(len(tmp_rule_class_dict)):
                     if old_class == tmp_rule_class_dict[j]:
                         new_stoichiometry[j] = self.stoichiometies[i][h]
@@ -86,7 +90,7 @@ class Rule:
         self.mergeClassLists()
 
         # UNPACK DEF TO SPECIFIC LOCATION
-        rule_dict = {"name":self.rule_name, "reduction":self.reduction, "target_types":self.targets, "required_classes":self.rule_classes,
+        rule_dict = {"name":self.rule_name, "target_types":self.targets, "required_classes":self.rule_classes,
                      "stoichiometries":self.stoichiometies, "propensities":self.propensities}
         return rule_dict
 
@@ -105,19 +109,27 @@ class Rules:
         for rule in rules:
             self.addRule(rule)
     
-    def checkRulesHaveDefinedClasses(self):
+    def checkRules(self):
         for rule in self.rules:
-            for propensity_class in range(len(rule.propensity_classes)):
-                if not propensity_class in self.defined_classes:
-                    raise ValueError(f"Class required for the propensity is, {propensity_class} not defined (Rule name: {rule.name})")
-            for stoichiometry_class in range(len(rule.stoichiomety_classes)):
-                if not stoichiometry_class in self.defined_classes:
-                    raise ValueError(f"Class required for the propensity is, {stoichiometry_class} not defined (Rule name: {rule.name})")
+            rule.checkRuleDefinition()
+
+            for propensity_class_index in range(len(rule.propensity_classes)):
+                location_propensity_class = rule.propensity_classes[propensity_class_index]
+                for loc_prop_class in location_propensity_class:
+                    if not loc_prop_class in self.defined_classes:
+                        raise ValueError(f"Class required for the propensity, {loc_prop_class}, not defined (Rule name: {rule.rule_name})")
+                    
+            for stoichiometry_class_index in range(len(rule.stoichiometry_classes)):
+                location_stoichiometry_class = rule.stoichiometry_classes[stoichiometry_class_index]
+                print(location_stoichiometry_class)
+                for loc_stoich_class in location_stoichiometry_class:
+                    if not loc_stoich_class in self.defined_classes:
+                        raise ValueError(f"Class required for the propensity is, {loc_stoich_class} not defined (Rule name: {rule.rule_name})")
         return True
 
 
     def writeJSON(self, filename):
-        self.checkRulesHaveDefinedClasses()
+        self.checkRules()
         rules_dict = {}
         for i, rule in enumerate(self.rules):
             rule_dict = rule.returnRuleDict()

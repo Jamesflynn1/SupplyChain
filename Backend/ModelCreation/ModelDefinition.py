@@ -1,17 +1,17 @@
 import numpy as np
 
-
+import ModelClasses
+import ModelLocations
+import ModelRules
 
 import SupplyChainLocations
 import SupplyChainRules
 
-import Backend.ModelCreation.ModelClasses as ModelClasses
 import RuleMatching
-import json
 
 class ModelDefinition:
-    def __init__(self, classes_defintions, create_locations, create_rules, classes_filename = "Classes.json", location_filename = "Locations.json", metarule_filename = "MetaRules.json",
-                 matched_rules_filename = "LocationMatchedRules.json", model_folder = "Backend/ModelFiles/"):
+    def __init__(self, classes_defintions, create_locations, create_rules, distance_func = SupplyChainLocations.createEuclideanDistanceMatrix, classes_filename = "Classes.json", location_filename = "Locations.json", metarule_filename = "MetaRules.json",
+                 matched_rules_filename = "LocationMatchedRules.json", model_folder = "../ModelFiles/"):
         self.classes_filename = classes_filename
         self.location_filename = location_filename
         self.metarule_filename = metarule_filename
@@ -21,16 +21,17 @@ class ModelDefinition:
         self.classes_defintions = classes_defintions
         self.create_locations_func = create_locations
         self.create_rules_func = create_rules
+        self.distance_func = distance_func
 
     def createLocations(self):
-        all_locations = SupplyChainLocations.Locations(self.defined_classes)
+        all_locations = ModelLocations.Locations(self.defined_classes, self.distance_func)
         locations = self.create_locations_func()
         all_locations.addLocations(locations)
         self.locations = all_locations.writeJSON(f"{self.model_folder}{self.location_filename}")
 
     def createRules(self):
         # Use np.identity(len()) .... for no change
-        all_rules = SupplyChainRules.Rules(self.defined_classes)
+        all_rules = ModelRules.Rules(self.defined_classes)
 
         rules = self.create_rules_func()
         all_rules.addRules(rules)
@@ -65,10 +66,14 @@ def supplyChainRules():
     return [transport_nitrogen, manufacture_ammonia]
 
 def supplyChainLocations():
-    SupplyChainLocations.ChemicalPlant()
-    return []
+    ammonia_plant = SupplyChainLocations.ChemicalPlant(1,1,"Example plant")
+    nitrogen_plant = SupplyChainLocations.ChemicalPlant(1,1,"Example plant 2")
 
-supplyChainClasses = [["NH4", "tonnes"], ["N2", "m^3"], ["H2", "m^3"]]
+    ammonia_plant.addAmmoniaManufacturing()
+    nitrogen_plant.addNitrogenManufacturing()
+    return [ammonia_plant, nitrogen_plant]
 
-model = ModelDefinition(supplyChainClasses, supplyChainRules, supplyChainLocations)
-model.build()
+#supplyChainClasses = [["NH4", "tonnes"], ["N2", "m^3"], ["H2", "m^3"], ["CH4", "m^3"]]
+
+#model = ModelDefinition(supplyChainClasses, supplyChainLocations, supplyChainRules, model_folder="Backend/ModelFiles/")
+#model.build()

@@ -5,7 +5,6 @@
             "0": "1",
             "1": "1"
         },
-        "reduction": "product",
         "required_classes": [
             {
                 "0": "N2"
@@ -28,11 +27,10 @@
         ]
     },
     "1": {
-        "name": "Test Ammonia Manufacturing",
+        "name": "Make Ammonia",
         "propensities": {
             "0": "N2*H2"
         },
-        "reduction": "product",
         "required_classes": [
             {
                 "0": "H2",

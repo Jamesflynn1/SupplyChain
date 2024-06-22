@@ -1,0 +1,18 @@
+{
+    "CH4": {
+        "class_measurement_unit": "m^3",
+        "class_restriction": "None"
+    },
+    "H2": {
+        "class_measurement_unit": "m^3",
+        "class_restriction": "None"
+    },
+    "N2": {
+        "class_measurement_unit": "m^3",
+        "class_restriction": "None"
+    },
+    "NH4": {
+        "class_measurement_unit": "tonnes",
+        "class_restriction": "None"
+    }
+}

@@ -38,18 +38,18 @@ class ChemicalPlant(ModelLocations.Location):
 
     def addAmmoniaManufacturing(self):
         if self.added_processing["Ammonia"] == False:
-            self.type += " AmmoniaPlant"
-            self.compartment_labels.add("NH4")
-            self.compartment_labels.add("N2")
-            self.compartment_labels.add("H2")
+            self.loc_type += " AmmoniaPlant"
+            self.class_labels.add("NH4")
+            self.class_labels.add("N2")
+            self.class_labels.add("H2")
             self.added_processing["Ammonia"] = True
         else:
             raise(ValueError("Already added Ammonia manufacturing"))
     def addNitrogenManufacturing(self):
         if self.added_processing["Nitrogen"] == False:
-            self.type += " NitrogenPlant"
-            self.compartment_labels.add("CH4")
-            self.compartment_labels.add("N2")
+            self.loc_type += " NitrogenPlant"
+            self.class_labels.add("CH4")
+            self.class_labels.add("N2")
             self.added_processing["Nitrogen"] = True
         else:
             raise(ValueError("Already added Nitrogen manufacturing"))
@@ -58,4 +58,7 @@ class FarmRegion(ModelLocations.Location):
     def __init__(self, lat, long, name):
         # Sets lat/long and creates and empty set of compartment labels.
         super().__init__(lat, long, name, loc_type="FarmRegion")
-        self.added_crops = {"Wheat" : False, "Barley" : False}
+
+        crops = ["Cereals", "Wheat", "Barley"]
+        for crop in crops:
+            self.class_labels.add(crop)

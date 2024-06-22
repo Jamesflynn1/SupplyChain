@@ -11,6 +11,9 @@ class Classes:
             raise(ValueError(f"Duplicate type {class_name} provided."))
 
     def writeClassJSON(self, filepath):
+        
+        json_classes = json.dumps(self.class_def_dict, indent=4, sort_keys=True)
+
         with open(filepath, "w") as outfile:
-            outfile.write(self.class_def_dict)
+            outfile.write(json_classes)
         return self.class_def_dict

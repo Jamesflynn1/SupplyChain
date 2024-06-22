@@ -6,11 +6,11 @@ import ModelRules
 
 class SingleLocationRule(ModelRules.Rule):
        def __init__(self, target, propensity, stoichiomety,
-                    propensity_classes, stoichiomety_classes,
+                    propensity_classes, stoichiometry_classes,
                     rule_name = "SINGLE LOCATION RULE"):
               super().__init__(rule_name, [target])
-              self.addLinearStoichiomety(0, [stoichiomety], [stoichiomety_classes])
-              self.addSimplePropensityFunction(0, [propensity], [propensity_classes])
+              self.addLinearStoichiomety([0], [stoichiomety], [stoichiometry_classes])
+              self.addSimplePropensityFunction([0], [propensity], [propensity_classes])
 
 class SingleLocationProductionRule(SingleLocationRule):
        def __init__(self, target, reactant_classes, reactant_amount, 
@@ -25,14 +25,14 @@ class SingleLocationProductionRule(SingleLocationRule):
                 stoichiometry[i] = -reactant_amount[i]
             for i  in range(product_len):
                 stoichiometry[i+reactants_len] = product_amount[i]
-            stoichiomety_classes = [reactant_classes+product_classes]
+            stoichiometry_classes = reactant_classes+product_classes
 
-            super().__init__(target, propensity, stoichiometry, propensity_classes, stoichiomety_classes, rule_name)
+            super().__init__(target, propensity, stoichiometry, propensity_classes, stoichiometry_classes, rule_name)
 
 class TransportRule(ModelRules.Rule):
        def __init__(self, source, target, transport_class,
                           propensities, transport_amount, propensity_classes,
-                          rule_name = "Unnamed transport rule"):
+                          rule_name = "TRANSPORT RULE"):
               super().__init__(rule_name, [source, target])
 
               assert(len(propensities) == 2)
@@ -45,16 +45,15 @@ class TransportRule(ModelRules.Rule):
 
               self.addLinearStoichiomety([0, 1], [source_stochiometry, target_stochiometry], [[transport_class], [transport_class]])
               self.addSimplePropensityFunction([0, 1], propensities, propensity_classes)
+
 class ExitEntranceRule(ModelRules.Rule):
        def __init__(self, target, transport_class,
-                    transport_amount, propensity, propensity_classes, 
-                    is_exit_rule, rule_name = "EXIT/ENTRANCE"):
+                    transport_amount, propensity, propensity_classes,
+                    rule_name = "EXIT/ENTRANCE RULE"):
             super().__init__(rule_name, [target])
             target_stochiometry = None
-            if is_exit_rule:
-                target_stochiometry = [-transport_amount]
-            else:
-                  target_stochiometry = [transport_amount]
+            # Negative transport amount = entrance
+            target_stochiometry = [transport_amount]
 
             self.addLinearStoichiomety([0], [target_stochiometry], [transport_class])
             self.addSimplePropensityFunction([0], [propensity], [propensity_classes])

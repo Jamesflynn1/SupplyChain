@@ -9,6 +9,9 @@ class Location:
         self.name = name
         self.class_labels = set([])
         self.loc_type = loc_type
+
+        self.model_constants = {}
+        self.model_variables = {}
         
     def returnDictDescription(self, initial_conds=None):
         #For ease of use and to ensure compartment label order is invariant to order construction functions are called.
@@ -61,6 +64,7 @@ class Locations:
             self.addCoordinates(location.lat, location.long)
         else:
             raise(TypeError(f"location is not a child type of Location base class (type: {type(location)})"))
+        
     def addLocations(self, locations):
         for location in locations:
             self.addLocation(location)
