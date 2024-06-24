@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 class ModelBackend:
 
-    def __init__(self, solver_type = "Gillespie", location_filename = "BaseLocations.json", matched_rules_filename = "LocationMatchedRules.json",
+    def __init__(self, solver_type = "Gillespie", location_filename = "Locations.json", matched_rules_filename = "LocationMatchedRules.json",
                  model_folder = "Backend/ModelFiles/"):
 
         self.matched_rules_filename = matched_rules_filename
@@ -33,17 +33,22 @@ class ModelBackend:
 
 
 
-    def simulate(self, time_steps):
+    def simulate(self, time_limit, max_iterations = 1000):
         self.resetModel()
-        for iterations in range(time_steps):
+        i = 0
+        while self.simulation_time < time_limit and i <= max_iterations:
              # Simulate one step should update the location objects automatically with the new compartment values.
              new_time = self.solver.simulateOneStep(self.simulation_time)
+             print(new_time)
              self.simulation_time = new_time
              location_values = []
              for location in self.locations:
                  location_values.append(location.class_values)
              self.trajectory.addEntry(new_time, location_values)
+             i += 1
         return self.trajectory
 
 application = ModelBackend()
-out = application.simulate(7).trajectory_location_values
+out = application.simulate(100)
+
+print(out)

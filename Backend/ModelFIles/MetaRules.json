@@ -1,52 +1,311 @@
 {
     "0": {
-        "name": "Transport Nitrogen",
+        "name": "Purchase Seeds",
         "propensities": {
-            "0": "1",
-            "1": "1"
+            "0": "0.1"
         },
         "required_classes": [
             {
-                "0": "N2"
-            },
-            {
-                "0": "N2"
+                "0": "Seeds_Wheat"
             }
         ],
         "stoichiometries": {
             "0": [
-                -2.0
-            ],
-            "1": [
-                2.0
+                1.0
             ]
         },
         "target_types": [
-            "ChemicalPlant NitrogenPlant",
-            "ChemicalPlant AmmoniaPlant"
+            "FarmRegion"
         ]
     },
     "1": {
-        "name": "Make Ammonia",
+        "name": "Sow Wheat",
         "propensities": {
-            "0": "N2*H2"
+            "0": "Seeds_Wheat"
         },
         "required_classes": [
             {
-                "0": "H2",
-                "1": "N2",
-                "2": "NH4"
+                "0": "Planted_Wheat",
+                "1": "Seeds_Wheat"
             }
         ],
         "stoichiometries": {
             "0": [
-                -3.0,
+                0.1,
+                -1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "2": {
+        "name": "Germinate Wheat",
+        "propensities": {
+            "0": "Planted_Wheat"
+        },
+        "required_classes": [
+            {
+                "0": "Growing_Wheat",
+                "1": "Planted_Wheat"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1.0,
+                -1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "3": {
+        "name": "Germinate Wheat",
+        "propensities": {
+            "0": "Growing_Wheat"
+        },
+        "required_classes": [
+            {
+                "0": "Growing_Wheat",
+                "1": "Viable_Wheat"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
                 -1.0,
                 1.0
             ]
         },
         "target_types": [
-            "ChemicalPlant AmmoniaPlant"
+            "FarmRegion"
+        ]
+    },
+    "4": {
+        "name": "Harvest Wheat",
+        "propensities": {
+            "0": "Viable_Wheat"
+        },
+        "required_classes": [
+            {
+                "0": "Harvested_Wheat",
+                "1": "Viable_Wheat"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1.0,
+                -1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "5": {
+        "name": "Purchase Seeds",
+        "propensities": {
+            "0": "0.1"
+        },
+        "required_classes": [
+            {
+                "0": "Seeds_Cereals"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "6": {
+        "name": "Sow Cereals",
+        "propensities": {
+            "0": "Seeds_Cereals"
+        },
+        "required_classes": [
+            {
+                "0": "Planted_Cereals",
+                "1": "Seeds_Cereals"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.2,
+                -1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "7": {
+        "name": "Germinate Cereals",
+        "propensities": {
+            "0": "Planted_Cereals"
+        },
+        "required_classes": [
+            {
+                "0": "Growing_Cereals",
+                "1": "Planted_Cereals"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1.0,
+                -1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "8": {
+        "name": "Germinate Cereals",
+        "propensities": {
+            "0": "Growing_Cereals"
+        },
+        "required_classes": [
+            {
+                "0": "Growing_Cereals",
+                "1": "Viable_Cereals"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -1.0,
+                1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "9": {
+        "name": "Harvest Cereals",
+        "propensities": {
+            "0": "Viable_Cereals"
+        },
+        "required_classes": [
+            {
+                "0": "Harvested_Cereals",
+                "1": "Viable_Cereals"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1.0,
+                -1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "10": {
+        "name": "Purchase Seeds",
+        "propensities": {
+            "0": "0.1"
+        },
+        "required_classes": [
+            {
+                "0": "Seeds_Barley"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "11": {
+        "name": "Sow Barley",
+        "propensities": {
+            "0": "Seeds_Barley"
+        },
+        "required_classes": [
+            {
+                "0": "Planted_Barley",
+                "1": "Seeds_Barley"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.3,
+                -1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "12": {
+        "name": "Germinate Barley",
+        "propensities": {
+            "0": "Planted_Barley"
+        },
+        "required_classes": [
+            {
+                "0": "Growing_Barley",
+                "1": "Planted_Barley"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1.0,
+                -1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "13": {
+        "name": "Germinate Barley",
+        "propensities": {
+            "0": "Growing_Barley"
+        },
+        "required_classes": [
+            {
+                "0": "Growing_Barley",
+                "1": "Viable_Barley"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -1.0,
+                1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "14": {
+        "name": "Harvest Barley",
+        "propensities": {
+            "0": "Viable_Barley"
+        },
+        "required_classes": [
+            {
+                "0": "Harvested_Barley",
+                "1": "Viable_Barley"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1.0,
+                -1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
         ]
     }
 }

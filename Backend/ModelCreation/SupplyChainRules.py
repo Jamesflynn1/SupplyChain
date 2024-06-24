@@ -51,9 +51,6 @@ class ExitEntranceRule(ModelRules.Rule):
                     transport_amount, propensity, propensity_classes,
                     rule_name = "EXIT/ENTRANCE RULE"):
             super().__init__(rule_name, [target])
-            target_stochiometry = None
-            # Negative transport amount = entrance
-            target_stochiometry = [transport_amount]
 
-            self.addLinearStoichiomety([0], [target_stochiometry], [transport_class])
+            self.addLinearStoichiomety([0], [[transport_amount]], [[transport_class]])
             self.addSimplePropensityFunction([0], [propensity], [propensity_classes])

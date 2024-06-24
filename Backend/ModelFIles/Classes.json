@@ -3,8 +3,32 @@
         "class_measurement_unit": "m^3",
         "class_restriction": "None"
     },
+    "Growing_Barley": {
+        "class_measurement_unit": "Hectacres",
+        "class_restriction": "None"
+    },
+    "Growing_Cereals": {
+        "class_measurement_unit": "Hectacres",
+        "class_restriction": "None"
+    },
+    "Growing_Wheat": {
+        "class_measurement_unit": "Hectacres",
+        "class_restriction": "None"
+    },
     "H2": {
         "class_measurement_unit": "m^3",
+        "class_restriction": "None"
+    },
+    "Harvested_Barley": {
+        "class_measurement_unit": "Tonnes",
+        "class_restriction": "None"
+    },
+    "Harvested_Cereals": {
+        "class_measurement_unit": "Tonnes",
+        "class_restriction": "None"
+    },
+    "Harvested_Wheat": {
+        "class_measurement_unit": "Tonnes",
         "class_restriction": "None"
     },
     "N2": {
@@ -13,6 +37,42 @@
     },
     "NH4": {
         "class_measurement_unit": "tonnes",
+        "class_restriction": "None"
+    },
+    "Planted_Barley": {
+        "class_measurement_unit": "Hectacres",
+        "class_restriction": "None"
+    },
+    "Planted_Cereals": {
+        "class_measurement_unit": "Hectacres",
+        "class_restriction": "None"
+    },
+    "Planted_Wheat": {
+        "class_measurement_unit": "Hectacres",
+        "class_restriction": "None"
+    },
+    "Seeds_Barley": {
+        "class_measurement_unit": "Tonnes",
+        "class_restriction": "None"
+    },
+    "Seeds_Cereals": {
+        "class_measurement_unit": "Tonnes",
+        "class_restriction": "None"
+    },
+    "Seeds_Wheat": {
+        "class_measurement_unit": "Tonnes",
+        "class_restriction": "None"
+    },
+    "Viable_Barley": {
+        "class_measurement_unit": "Tonnes",
+        "class_restriction": "None"
+    },
+    "Viable_Cereals": {
+        "class_measurement_unit": "Tonnes",
+        "class_restriction": "None"
+    },
+    "Viable_Wheat": {
+        "class_measurement_unit": "Tonnes",
         "class_restriction": "None"
     }
 }

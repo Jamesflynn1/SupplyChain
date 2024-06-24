@@ -124,7 +124,7 @@ class Rules:
                 print(location_stoichiometry_class)
                 for loc_stoich_class in location_stoichiometry_class:
                     if not loc_stoich_class in self.defined_classes:
-                        raise ValueError(f"Class required for the propensity is, {loc_stoich_class} not defined (Rule name: {rule.rule_name})")
+                        raise ValueError(f"Class required for the stoichiometry, {loc_stoich_class} not defined (Rule name: {rule.rule_name})")
         return True
 
 

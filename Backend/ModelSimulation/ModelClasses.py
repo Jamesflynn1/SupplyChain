@@ -52,9 +52,8 @@ class Rule:
         # Assume product operation.
         propensity = 1
         for loc_i, location in enumerate(locations):
-            print(location.class_values[:])
-            propensity *= self.lambda_propensities[loc_i](*location.class_values)
-        print(propensity)
+            # Apply thresholding here to ensure that no negative propensities are used.
+            propensity *= max(0, self.lambda_propensities[loc_i](*location.class_values))
         assert (propensity >= 0)
         return propensity
     
@@ -66,11 +65,12 @@ class Rule:
         new_class_values = []
         for loc_i, location in enumerate(locations):
             new_location_values = self.locationAttemptedCompartmentChange(location.class_values, loc_i, times_triggered)
-            if np.any(new_location_values<0):
+            # CHANGE TODO
+            if np.any(new_location_values<-10):
                 negative = True
                 break
             else:
-                new_class_values.append(new_location_values)
+                new_class_values.append([new_location_values, location.name])
         if not negative:
             for loc_i, location in enumerate(locations):
                 location.updateCompartmentValues(new_class_values[loc_i])
@@ -87,3 +87,4 @@ class Trajectory:
     def addEntry(self, time, location_values):
         self.trajectory_location_values.append(location_values)
         self.timestamps.append(time)
+    def plotClassesOver()
