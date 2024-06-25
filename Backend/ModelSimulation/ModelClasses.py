@@ -1,10 +1,11 @@
 from typing import Any
 import numpy as np
 import sympy
-
+import matplotlib.pyplot as plt
 
 class Location:
-    def __init__ (self, lat, long, loc_type, label_mapping, transport_distance, initial_class_values):
+    def __init__ (self, name, lat, long, loc_type, label_mapping, transport_distance, initial_class_values):
+        self.name = name
         self.lat = lat
         self.long = long
         self.loc_type = loc_type
@@ -70,7 +71,7 @@ class Rule:
                 negative = True
                 break
             else:
-                new_class_values.append([new_location_values, location.name])
+                new_class_values.append(new_location_values)
         if not negative:
             for loc_i, location in enumerate(locations):
                 location.updateCompartmentValues(new_class_values[loc_i])
@@ -80,11 +81,18 @@ class Rule:
             return False
         
 class Trajectory:
-    def __init__(self) -> None:
-        self.timestamps = []
-        self.trajectory_location_values = []
+    def __init__(self, locations) -> None:
+        self.timestamps = {location_index:[0] for location_index, _ in enumerate(locations)}
+        self.trajectory_location_values = {location_index:[location.class_values] for location_index, location in enumerate(locations)}
 
-    def addEntry(self, time, location_values):
-        self.trajectory_location_values.append(location_values)
-        self.timestamps.append(time)
-    def plotClassesOver()
+
+
+    def addEntry(self, time, location_values, location_index):
+        self.trajectory_location_values[location_index].append(location_values)
+        self.timestamps[location_index].append(time)
+
+    def plotClassesOverTime(self, location_index, classes):
+        class_values = np.array(self.trajectory_location_values[location_index])
+
+        plt.plot(self.timestamps[location_index], class_values[:,1])
+        plt.show()

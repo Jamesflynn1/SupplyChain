@@ -35,6 +35,7 @@
             "14": "Viable_Wheat"
         },
         "lat": 55,
+        "location_name": "North East",
         "long": -1.87,
         "transport_distance": [
             0.0,
@@ -86,6 +87,7 @@
             "14": "Viable_Wheat"
         },
         "lat": 55,
+        "location_name": "North West",
         "long": -1.87,
         "transport_distance": [
             0.0,
@@ -137,6 +139,7 @@
             "14": "Viable_Wheat"
         },
         "lat": 53.566667,
+        "location_name": "Yorkshire & The Humber",
         "long": -1.2,
         "transport_distance": [
             165.1010839375448,
@@ -188,6 +191,7 @@
             "14": "Viable_Wheat"
         },
         "lat": 52.98,
+        "location_name": "East Midlands",
         "long": -0.75,
         "transport_distance": [
             236.0901024860533,
@@ -239,6 +243,7 @@
             "14": "Viable_Wheat"
         },
         "lat": 52.478861,
+        "location_name": "West Midlands",
         "long": -2.256306,
         "transport_distance": [
             281.30881282857206,
@@ -290,6 +295,7 @@
             "14": "Viable_Wheat"
         },
         "lat": 52.24,
+        "location_name": "East of England",
         "long": 0.41,
         "transport_distance": [
             341.4995570306412,
@@ -341,6 +347,7 @@
             "14": "Viable_Wheat"
         },
         "lat": 51.3,
+        "location_name": "South East & London",
         "long": -0.8,
         "transport_distance": [
             417.2872598906424,
@@ -392,6 +399,7 @@
             "14": "Viable_Wheat"
         },
         "lat": 50.96,
+        "location_name": "South West",
         "long": -3.22,
         "transport_distance": [
             457.9183877109842,
@@ -443,6 +451,7 @@
             "14": "Viable_Wheat"
         },
         "lat": 56.816738,
+        "location_name": "Scotland",
         "long": -4.183963,
         "transport_distance": [
             248.02497657769723,
@@ -494,6 +503,7 @@
             "14": "Viable_Wheat"
         },
         "lat": 52.33022,
+        "location_name": "Wales",
         "long": -3.766409,
         "transport_distance": [
             321.85444405986544,

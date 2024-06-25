@@ -19,16 +19,17 @@ class ModelBackend:
 
         self.simulation_time = 0
 
-        self.trajectory = ModelClasses.Trajectory()
+        self.trajectory = ModelClasses.Trajectory(self.locations)
         if solver_type == "Gillespie":
             self.solver =  ModelSolvers.GillespieSolver(self.locations, self.rules, self.matched_indices)
         else:
             raise ValueError("Only supported model solver at the moment is exact Gillespie.")
 
     def resetModel(self):
-        self.trajectory = ModelClasses.Trajectory()
         for location in self.locations:
             location.reset()
+        # Trajectory uses current location values so needs to be defined after location values reset.
+        self.trajectory = ModelClasses.Trajectory(self.locations)
         self.simulation_time = 0
 
 
@@ -41,14 +42,14 @@ class ModelBackend:
              new_time = self.solver.simulateOneStep(self.simulation_time)
              print(new_time)
              self.simulation_time = new_time
-             location_values = []
-             for location in self.locations:
-                 location_values.append(location.class_values)
-             self.trajectory.addEntry(new_time, location_values)
+             # TODO To save memory - could just add changed location values
+             for location_index, location in enumerate(self.locations):
+                self.trajectory.addEntry(new_time, location.class_values, location_index)
              i += 1
         return self.trajectory
 
 application = ModelBackend()
 out = application.simulate(100)
 
+out.plotClassesOverTime(2, None)
 print(out)

@@ -24,7 +24,7 @@ class GillespieSolver(Solver):
                 propensities.append([propensity, [rule_i, index_set_I]])
                 
         if total_propensity <= 0:
-            print("All rules have 0 propensity.")
+            print("Finishing model simulation early.\n No rules left to trigger - all rules have 0 propensity.")
             return
         # Generate 0 to 1
         # Random rule

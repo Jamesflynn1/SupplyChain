@@ -19,7 +19,7 @@ class Location:
         class_label_mapping = {i:label for i, label in enumerate(ordered_class_labels)}
         if initial_conds is None:
             initial_conds = list(np.zeros(len(self.class_labels)))
-        return {"lat" : self.lat, "long":self.long, "label_mapping":class_label_mapping, "type":self.loc_type, "initial_values":initial_conds}
+        return {"location_name":self.name, "lat" : self.lat, "long":self.long, "label_mapping":class_label_mapping, "type":self.loc_type, "initial_values":initial_conds}
     
 
 class Locations:
