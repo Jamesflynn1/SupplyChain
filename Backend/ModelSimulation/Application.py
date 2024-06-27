@@ -34,7 +34,7 @@ class ModelBackend:
 
 
 
-    def simulate(self, time_limit, max_iterations = 1000):
+    def simulate(self, time_limit, max_iterations = 100000):
         self.resetModel()
         i = 0
         while self.simulation_time < time_limit and i <= max_iterations:
@@ -51,5 +51,5 @@ class ModelBackend:
 application = ModelBackend()
 out = application.simulate(100)
 
-out.plotClassesOverTime(2, None)
+out.plotAllClassesOverTime(0)
 print(out)

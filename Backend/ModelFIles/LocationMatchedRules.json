@@ -151,7 +151,7 @@
             ]
         ],
         "propensity": [
-            "x8"
+            "0.1*x8"
         ],
         "rule_location_types": "FarmRegion",
         "rule_name": "Germinate Wheat",
@@ -446,7 +446,7 @@
             ]
         ],
         "propensity": [
-            "x7"
+            "0.1*x7"
         ],
         "rule_location_types": "FarmRegion",
         "rule_name": "Germinate Cereals",
@@ -741,7 +741,7 @@
             ]
         ],
         "propensity": [
-            "x6"
+            "0.1*x6"
         ],
         "rule_location_types": "FarmRegion",
         "rule_name": "Germinate Barley",

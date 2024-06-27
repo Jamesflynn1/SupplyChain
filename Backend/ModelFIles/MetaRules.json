@@ -42,7 +42,7 @@
     "2": {
         "name": "Germinate Wheat",
         "propensities": {
-            "0": "Planted_Wheat"
+            "0": "0.1*Planted_Wheat"
         },
         "required_classes": [
             {
@@ -145,7 +145,7 @@
     "7": {
         "name": "Germinate Cereals",
         "propensities": {
-            "0": "Planted_Cereals"
+            "0": "0.1*Planted_Cereals"
         },
         "required_classes": [
             {
@@ -248,7 +248,7 @@
     "12": {
         "name": "Germinate Barley",
         "propensities": {
-            "0": "Planted_Barley"
+            "0": "0.1*Planted_Barley"
         },
         "required_classes": [
             {
