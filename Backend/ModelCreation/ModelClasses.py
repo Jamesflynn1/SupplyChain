@@ -10,7 +10,7 @@ class Classes:
                 self.addClass(*built_in_class)
     
     def addClass(self, class_name, class_measurement_unit, class_restriction = "None"):
-        if class_name.contains(self.base_model_string):
+        if class_name in self.base_model_string:
             raise(ValueError(f"Class: {class_name} cannot contain model prefix{self.base_model_string}"))
         elif not class_name in self.class_names:
             self.class_def_dict[class_name] = {"class_measurement_unit":class_measurement_unit, "class_restriction":class_restriction}
@@ -18,14 +18,15 @@ class Classes:
             raise(ValueError(f"Duplicate type {class_name} provided."))
     def returnBuiltInClasses(self):
         builtin_classes = [[f"{self.base_model_string}day", "Day of year"], 
-                           [f"{self.base_model_string}hour","Hour of day"], 
-                           [f"{self.base_model_string}month"]]
+                           [f"{self.base_model_string}hour","Hour of day", "integer"], 
+                           [f"{self.base_model_string}month", "Month of year", "integer"]]
         months = [["jan", "January"], ["feb", "February"], ["mar", "March"], ["apr", "April"],
                   ["may", "May"], ["jun", "June"], ["jul", "July"], ["aug", "August"], 
                   ["sept", "September"], ["oct", "October"], ["nov", "November"], ["dec", "December"]
                   ]
         for month in months:
-            builtin_classes.append([f"{self.base_model_string}month.{month[0]})", month[1], "indictator"])
+            builtin_classes.append([f"{self.base_model_string}month.{month[0]}", month[1], "indictator"])
+        return builtin_classes
     def writeClassJSON(self, filepath):
         
         json_classes = json.dumps(self.class_def_dict, indent=4, sort_keys=True)

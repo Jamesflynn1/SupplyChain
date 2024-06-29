@@ -5,6 +5,7 @@ class Solver:
         self.locations = locations
         self.rules = rules
         self.matched_indices = matched_indices
+        #self.model_state = 
     def simulateOneStep(self):
         raise(TypeError("Abstract class Solver, please use a concrete implementation."))
 

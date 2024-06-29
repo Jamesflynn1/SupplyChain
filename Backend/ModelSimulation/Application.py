@@ -1,4 +1,5 @@
 import ModelClasses
+import ModelState
 import ModelSolvers
 import ModelLoader
 
@@ -18,6 +19,7 @@ class ModelBackend:
         self.rules, self.matched_indices = ModelLoader.loadMatchedRules(self.model_folder+self.matched_rules_filename)
 
         self.simulation_time = 0
+        #self.model_state = ModelState(modules=["Base"])
 
         self.trajectory = ModelClasses.Trajectory(self.locations)
         if solver_type == "Gillespie":
@@ -46,10 +48,8 @@ class ModelBackend:
              for location_index, location in enumerate(self.locations):
                 self.trajectory.addEntry(new_time, location.class_values, location_index)
              i += 1
+
+             if new_time is None:
+                 break
         return self.trajectory
 
-application = ModelBackend()
-out = application.simulate(100)
-
-out.plotAllClassesOverTime(0)
-print(out)

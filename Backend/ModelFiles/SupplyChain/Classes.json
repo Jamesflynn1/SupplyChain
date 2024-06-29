@@ -74,5 +74,65 @@
     "Viable_Wheat": {
         "class_measurement_unit": "Tonnes",
         "class_restriction": "None"
+    },
+    "model.day": {
+        "class_measurement_unit": "Day of year",
+        "class_restriction": "None"
+    },
+    "model.hour": {
+        "class_measurement_unit": "Hour of day",
+        "class_restriction": "integer"
+    },
+    "model.month": {
+        "class_measurement_unit": "Month of year",
+        "class_restriction": "integer"
+    },
+    "model.month.apr": {
+        "class_measurement_unit": "April",
+        "class_restriction": "indictator"
+    },
+    "model.month.aug": {
+        "class_measurement_unit": "August",
+        "class_restriction": "indictator"
+    },
+    "model.month.dec": {
+        "class_measurement_unit": "December",
+        "class_restriction": "indictator"
+    },
+    "model.month.feb": {
+        "class_measurement_unit": "February",
+        "class_restriction": "indictator"
+    },
+    "model.month.jan": {
+        "class_measurement_unit": "January",
+        "class_restriction": "indictator"
+    },
+    "model.month.jul": {
+        "class_measurement_unit": "July",
+        "class_restriction": "indictator"
+    },
+    "model.month.jun": {
+        "class_measurement_unit": "June",
+        "class_restriction": "indictator"
+    },
+    "model.month.mar": {
+        "class_measurement_unit": "March",
+        "class_restriction": "indictator"
+    },
+    "model.month.may": {
+        "class_measurement_unit": "May",
+        "class_restriction": "indictator"
+    },
+    "model.month.nov": {
+        "class_measurement_unit": "November",
+        "class_restriction": "indictator"
+    },
+    "model.month.oct": {
+        "class_measurement_unit": "October",
+        "class_restriction": "indictator"
+    },
+    "model.month.sept": {
+        "class_measurement_unit": "September",
+        "class_restriction": "indictator"
     }
 }

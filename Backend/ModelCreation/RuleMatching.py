@@ -72,7 +72,7 @@ def returnRuleMatchingIndices(rules, locations):
 
 # Return the final propensity for a given rule provided concrete locations. 
 # Assumption that locations of the same type have the same compartments.
-def obtainPropensity(rule, locations):
+def obtainPropensity(rule, locations, builtin_classes):
     propensities = rule["propensities"]
     new_propensities = []
     for location_i, location in enumerate(locations):
@@ -80,6 +80,9 @@ def obtainPropensity(rule, locations):
         new_label_mapping = location["label_mapping"]
         for label_i in list(new_label_mapping.keys()):
             new_propensity = new_propensity.replace(new_label_mapping[label_i], f"x{label_i}")
+        # Add the built in class at the end of the location classes
+        for builtin_class in builtin_classes:
+            new_propensity = new_propensity.replace(builtin_class[0], f"x{label_i+len(new_label_mapping)}")
         new_propensities.append(new_propensity)
     print(new_propensities)
     return new_propensities
@@ -121,7 +124,7 @@ def obtainStochiometry(rule, locations):
         
     return new_stoichiometries
 
-def writeMatchedRuleJSON(rules, locations, filename):
+def writeMatchedRuleJSON(rules, locations, filename, builtin_classes):
     matched_rules = returnRuleMatchingIndices(rules, locations)
     
     concrete_match_rules_dict = {}
@@ -139,7 +142,7 @@ def writeMatchedRuleJSON(rules, locations, filename):
             
             # TODO ensure compatibility with further propensity functions
             concrete_rule_dict["stoichiomety"] = obtainStochiometry(rules[rule_i], example_locations)
-            concrete_rule_dict["propensity"] = obtainPropensity(rules[rule_i], example_locations)
+            concrete_rule_dict["propensity"] = obtainPropensity(rules[rule_i], example_locations, builtin_classes)
             concrete_match_rules_dict[concrete_rules] = concrete_rule_dict
             concrete_rules+= 1
     

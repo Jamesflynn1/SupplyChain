@@ -94,7 +94,8 @@ class Trajectory:
     def addEntry(self, time, location_values, location_index):
         if location_index != self.last_location_index:
             # Add last known time and value 
-            self.trajectory_location_values[location_index].append(self.trajectory_location_values[location_index][-1])
+            self.trajectory_location_values[location_index].append(self.trajectory_location_values[location_index]
+                                                                   [len(self.trajectory_location_values[location_index])-1])
             self.timestamps[location_index].append(self.last_time)
 
         self.trajectory_location_values[location_index].append(location_values)

@@ -12,13 +12,33 @@ class Location:
 
         self.model_constants = {}
         self.model_variables = {}
+
+        self.inital_conditions_dict = None
+    
+    def checkConditionDict(self, inital_conditions_dict):
+        for condition_class in inital_conditions_dict:
+            if not condition_class in self.class_labels:
+                raise(ValueError(f"Initial condition class {condition_class} not present at location."))
+            
+    def setInitialConditions(self, inital_conditions_dict):
+        # check all classes are defined
+        self.checkConditionDict(inital_conditions_dict)
+        self.inital_conditions_dict = inital_conditions_dict
+
         
-    def returnDictDescription(self, initial_conds=None):
+    def returnDictDescription(self):
         #For ease of use and to ensure compartment label order is invariant to order construction functions are called.
         ordered_class_labels = sorted(self.class_labels)
         class_label_mapping = {i:label for i, label in enumerate(ordered_class_labels)}
-        if initial_conds is None:
-            initial_conds = list(np.zeros(len(self.class_labels)))
+        initial_conds = list(np.zeros(len(self.class_labels)))
+
+        if not self.inital_conditions_dict is None:
+            self.checkConditionDict(self.inital_conditions_dict)
+            initial_conds_keys = list(self.inital_conditions_dict.keys())
+            for index, class_label in enumerate(ordered_class_labels):
+                if class_label in initial_conds_keys:
+                    initial_conds[index] = self.inital_conditions_dict[class_label]
+
         return {"location_name":self.name, "lat" : self.lat, "long":self.long, "label_mapping":class_label_mapping, "type":self.loc_type, "initial_values":initial_conds}
     
 

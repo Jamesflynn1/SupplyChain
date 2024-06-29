@@ -1,0 +1,88 @@
+{
+    "0": {
+        "name": "Exposure",
+        "propensities": {
+            "0": "0.11*I*S/(S+E+I+R)"
+        },
+        "required_classes": [
+            {
+                "0": "E",
+                "1": "I",
+                "2": "R",
+                "3": "S"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1.0,
+                0.0,
+                0.0,
+                -1.0
+            ]
+        },
+        "target_types": [
+            "Region"
+        ]
+    },
+    "1": {
+        "name": "Infection",
+        "propensities": {
+            "0": "0.2*E"
+        },
+        "required_classes": [
+            {
+                "0": "E",
+                "1": "I"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -1.0,
+                1.0
+            ]
+        },
+        "target_types": [
+            "Region"
+        ]
+    },
+    "2": {
+        "name": "Recovery",
+        "propensities": {
+            "0": "0.3*I"
+        },
+        "required_classes": [
+            {
+                "0": "I",
+                "1": "R"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -1.0,
+                1.0
+            ]
+        },
+        "target_types": [
+            "Region"
+        ]
+    },
+    "3": {
+        "name": "Death",
+        "propensities": {
+            "0": "0.01*0.3*I"
+        },
+        "required_classes": [
+            {
+                "0": "I"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1.0
+            ]
+        },
+        "target_types": [
+            "Region"
+        ]
+    }
+}

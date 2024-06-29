@@ -23,6 +23,8 @@ class ModelDefinition:
         self.create_rules_func = create_rules
         self.distance_func = distance_func
 
+        self.builtin_classes = True
+
     def createLocations(self):
         all_locations = ModelLocations.Locations(self.defined_classes, self.distance_func)
         locations = self.create_locations_func()
@@ -39,13 +41,17 @@ class ModelDefinition:
         self.rules = all_rules.writeJSON(f"{self.model_folder}{self.metarule_filename}")
 
     def defineClasses(self):
-        classes = ModelClasses.Classes()
+        classes = ModelClasses.Classes(self.builtin_classes)
         for class_info in self.classes_defintions:
             classes.addClass(*class_info)
         self.defined_classes = classes.writeClassJSON(f"{self.model_folder}{self.classes_filename}").keys()
 
     def matchRules(self):
-        RuleMatching.writeMatchedRuleJSON(self.rules, self.locations, f"{self.model_folder}{self.matched_rules_filename}")
+        additional_classes = []
+        if self.builtin_classes:
+            additional_classes = ModelClasses.Classes().returnBuiltInClasses()
+        RuleMatching.writeMatchedRuleJSON(self.rules, self.locations, f"{self.model_folder}{self.matched_rules_filename}", 
+                                          additional_classes)
     
     def build(self):
         self.defineClasses()

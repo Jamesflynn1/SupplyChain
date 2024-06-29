@@ -1,0 +1,206 @@
+{
+    "0": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ],
+            [
+                10
+            ]
+        ],
+        "propensity": [
+            "0.11*x1*x3/(x3+x0+x1+x2)"
+        ],
+        "rule_location_types": "Region",
+        "rule_name": "Exposure",
+        "rule_num": 0,
+        "stoichiomety": [
+            [
+                1.0,
+                0.0,
+                0.0,
+                -1.0
+            ]
+        ]
+    },
+    "1": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ],
+            [
+                10
+            ]
+        ],
+        "propensity": [
+            "0.2*x0"
+        ],
+        "rule_location_types": "Region",
+        "rule_name": "Infection",
+        "rule_num": 1,
+        "stoichiomety": [
+            [
+                -1.0,
+                1.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "2": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ],
+            [
+                10
+            ]
+        ],
+        "propensity": [
+            "0.3*x1"
+        ],
+        "rule_location_types": "Region",
+        "rule_name": "Recovery",
+        "rule_num": 2,
+        "stoichiomety": [
+            [
+                0.0,
+                -1.0,
+                1.0,
+                0.0
+            ]
+        ]
+    },
+    "3": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ],
+            [
+                10
+            ]
+        ],
+        "propensity": [
+            "0.01*0.3*x1"
+        ],
+        "rule_location_types": "Region",
+        "rule_name": "Death",
+        "rule_num": 3,
+        "stoichiomety": [
+            [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+            ]
+        ]
+    }
+}

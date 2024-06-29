@@ -27,34 +27,45 @@ class Rule:
                 self.stoichiometry_classes[index] = required_target_classes[i]
             else:
                 raise(ValueError(f"Unrecognised stoichiomety of type {type(stoichiometies[i])}, for target index {index}"))
+            
+    def returnSympyClassVarsDict(self, classes):
+        symbols_str = ""
+        for class_label in classes:
+            symbols_str += class_label+" "
+        symbols = sympy.symbols(symbols_str)
+        if not isinstance(symbols, (list, tuple)):
+            symbols = [symbols]
+        symbols_dict = {class_label:symbols[index] for index, class_label in enumerate(classes)}
+        return symbols_dict
     
     def addSimplePropensityFunction(self, target_indices, values, required_target_classes):
         # Accepts matrix or constant values at the moment
         assert(len(target_indices) == len(values))
         for i, index in enumerate(target_indices):
             value = values[i]
-            print(value)
+            print(f"{value}")
             if not self.propensities[index] is None:
                 raise(ValueError(f"Overwriting already set propensity is forbidden. Target location {self.targets[index]} at position {str(index+1)}"))
 
             if isinstance(value, str):
                 # TODO validate formula here
                 # We expect that the array has a single entry.
-                sympy_formula = sympy.parse_expr(value)
-
-                self.validateFormula(sympy_formula, required_target_classes[index])
+                symbols = self.returnSympyClassVarsDict(required_target_classes[index])
+                sympy_formula = sympy.parse_expr(value, local_dict=symbols)
+                self.validateFormula(sympy_formula, symbols)
             else:
                 raise(ValueError(f"Unrecognised propensity function of type {type(values[i])}, for target index {index}"))
             self.propensity_classes[index] = required_target_classes[i]
             self.propensities[index] = value
 
-    def validateFormula(self, formula, required_target_classes):
+    def validateFormula(self, formula, class_symbols, safe_num = 1):
         # Evaluate when all classes are 0
         subsitution_dict = {}
-        for index in range(len(required_target_classes)):
-            subsitution_dict[required_target_classes[index]] = 0
+        for class_str in list(class_symbols.keys()):
+            subsitution_dict[class_symbols[class_str]] = safe_num
         res = formula.evalf(subs=subsitution_dict)
         # We require that a numerical result is outputted and no symbols are left over.
+        print(res)
         assert(isinstance(res, (sympy.core.numbers.Float, sympy.core.numbers.Zero)))
         return True
 
