@@ -2,7 +2,7 @@
     "0": {
         "name": "Exposure",
         "propensities": {
-            "0": "0.11*I*S/(S+E+I+R)"
+            "0": "2*I*S/(S+E+I+R)*model_month_jan + 2*I*S/(S+E+I+R)*model_month_feb"
         },
         "required_classes": [
             {
@@ -27,7 +27,7 @@
     "1": {
         "name": "Infection",
         "propensities": {
-            "0": "0.2*E"
+            "0": "1*E"
         },
         "required_classes": [
             {
@@ -48,7 +48,7 @@
     "2": {
         "name": "Recovery",
         "propensities": {
-            "0": "0.3*I"
+            "0": "0.2*I"
         },
         "required_classes": [
             {
@@ -69,7 +69,7 @@
     "3": {
         "name": "Death",
         "propensities": {
-            "0": "0.01*0.3*I"
+            "0": "0.01*0.2*I"
         },
         "required_classes": [
             {

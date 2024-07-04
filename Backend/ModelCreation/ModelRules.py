@@ -2,6 +2,17 @@ import numpy as np
 import sympy
 import json
 
+def returnSympyClassVarsDict(classes):
+    symbols_str = ""
+    for class_label in classes:
+        symbols_str += class_label+" "
+    symbols = sympy.symbols(symbols_str)
+    if not isinstance(symbols, (list, tuple)):
+        symbols = [symbols]
+    symbols_dict = {class_label:symbols[index] for index, class_label in enumerate(classes)}
+    return symbols_dict
+
+
 class Rule:
     def __init__(self, rule_name, targets):
 
@@ -27,16 +38,6 @@ class Rule:
                 self.stoichiometry_classes[index] = required_target_classes[i]
             else:
                 raise(ValueError(f"Unrecognised stoichiomety of type {type(stoichiometies[i])}, for target index {index}"))
-            
-    def returnSympyClassVarsDict(self, classes):
-        symbols_str = ""
-        for class_label in classes:
-            symbols_str += class_label+" "
-        symbols = sympy.symbols(symbols_str)
-        if not isinstance(symbols, (list, tuple)):
-            symbols = [symbols]
-        symbols_dict = {class_label:symbols[index] for index, class_label in enumerate(classes)}
-        return symbols_dict
     
     def addSimplePropensityFunction(self, target_indices, values, required_target_classes):
         # Accepts matrix or constant values at the moment
@@ -47,14 +48,9 @@ class Rule:
             if not self.propensities[index] is None:
                 raise(ValueError(f"Overwriting already set propensity is forbidden. Target location {self.targets[index]} at position {str(index+1)}"))
 
-            if isinstance(value, str):
-                # TODO validate formula here
-                # We expect that the array has a single entry.
-                symbols = self.returnSympyClassVarsDict(required_target_classes[index])
-                sympy_formula = sympy.parse_expr(value, local_dict=symbols)
-                self.validateFormula(sympy_formula, symbols)
-            else:
+            if not isinstance(value, str):
                 raise(ValueError(f"Unrecognised propensity function of type {type(values[i])}, for target index {index}"))
+
             self.propensity_classes[index] = required_target_classes[i]
             self.propensities[index] = value
 
@@ -69,7 +65,7 @@ class Rule:
         assert(isinstance(res, (sympy.core.numbers.Float, sympy.core.numbers.Zero)))
         return True
 
-    def checkRuleDefinition(self):
+    def checkRuleDefinition(self, builtin_class_symbols):
         for i in range(len(self.targets)):
             if self.stoichiometies[i] is None:
                 raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry."))
@@ -79,6 +75,11 @@ class Rule:
                 raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined propensity class requirement."))
             elif self.stoichiometry_classes[i] is None:
                 raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry class requirement."))
+            
+        for index in range(len(self.propensities)):
+            symbols = returnSympyClassVarsDict(self.propensity_classes[index]) | builtin_class_symbols
+            sympy_formula = sympy.parse_expr(self.propensities[index], local_dict=symbols)
+            self.validateFormula(sympy_formula, symbols)
             
     def mergeClassLists(self):
         # Maps new index to class label
@@ -96,8 +97,8 @@ class Rule:
             self.stoichiometies[i] = list(new_stoichiometry)
             self.rule_classes.append(tmp_rule_class_dict)
         
-    def returnRuleDict(self):
-        self.checkRuleDefinition()
+    def returnRuleDict(self, builtin_class_symbols):
+        self.checkRuleDefinition(builtin_class_symbols)
         self.mergeClassLists()
 
         # UNPACK DEF TO SPECIFIC LOCATION
@@ -109,6 +110,15 @@ class Rules:
     def __init__(self, defined_classes):
         self.rules = []
         self.defined_classes = defined_classes
+        self.model_prefix = "model_"
+
+        builtin_classes = []
+
+        for classes in defined_classes:
+            if self.model_prefix in classes:
+                builtin_classes.append(classes)
+
+        self.builtin_symbols = returnSympyClassVarsDict(builtin_classes)
     
     def addRule(self, rule:Rule):
         if isinstance(rule, Rule):
@@ -122,7 +132,7 @@ class Rules:
     
     def checkRules(self):
         for rule in self.rules:
-            rule.checkRuleDefinition()
+            rule.checkRuleDefinition(self.builtin_symbols)
 
             for propensity_class_index in range(len(rule.propensity_classes)):
                 location_propensity_class = rule.propensity_classes[propensity_class_index]
@@ -138,12 +148,11 @@ class Rules:
                         raise ValueError(f"Class required for the stoichiometry, {loc_stoich_class} not defined (Rule name: {rule.rule_name})")
         return True
 
-
     def writeJSON(self, filename):
         self.checkRules()
         rules_dict = {}
         for i, rule in enumerate(self.rules):
-            rule_dict = rule.returnRuleDict()
+            rule_dict = rule.returnRuleDict(self.builtin_symbols)
             rules_dict[i] = rule_dict
         
         json_rules = json.dumps(rules_dict, indent=4, sort_keys=True)

@@ -1,25 +1,28 @@
 import numpy as np
 
 class Solver:
-    def __init__(self, locations, rules, matched_indices):
+    def __init__(self, locations, rules, matched_indices, model_state):
         self.locations = locations
         self.rules = rules
         self.matched_indices = matched_indices
-        #self.model_state = 
+        self.model_state = model_state
     def simulateOneStep(self):
         raise(TypeError("Abstract class Solver, please use a concrete implementation."))
 
 class GillespieSolver(Solver):
-    def __init__(self, locations, rules, matched_indices):
-        super().__init__(locations, rules, matched_indices)
+    def __init__(self, locations, rules, matched_indices, model_state):
+        super().__init__(locations, rules, matched_indices, model_state)
     
     def simulateOneStep(self, current_time):
         total_propensity = 0
         propensities = []
+
+
         for rule_i in range(len(self.matched_indices)):
             rule = self.rules[rule_i]
             for index_set_I in range(len(self.matched_indices[rule_i])):
-                propensity = rule.returnPropensity(np.take(self.locations, self.matched_indices[rule_i][index_set_I]))
+                propensity = rule.returnPropensity(np.take(self.locations, self.matched_indices[rule_i][index_set_I]), 
+                                                   list(self.model_state.returnModelClassesValues()))
                 total_propensity+= propensity
                 # First element the propensity, second element the rule index, index element pair.
                 propensities.append([propensity, [rule_i, index_set_I]])

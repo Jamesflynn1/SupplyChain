@@ -50,7 +50,7 @@ class ModelDefinition:
         additional_classes = []
         if self.builtin_classes:
             additional_classes = ModelClasses.Classes().returnBuiltInClasses()
-        RuleMatching.writeMatchedRuleJSON(self.rules, self.locations, f"{self.model_folder}{self.matched_rules_filename}", 
+        RuleMatching.writeMatchedRuleJSON(self.rules, self.locations, f"{self.model_folder}{self.matched_rules_filename}",
                                           additional_classes)
     
     def build(self):
@@ -58,28 +58,3 @@ class ModelDefinition:
         self.createLocations()
         self.createRules()
         self.matchRules()
-
-
-def supplyChainRules():
-    transport_nitrogen = SupplyChainRules.TransportRule(source="ChemicalPlant NitrogenPlant",
-                                                        target="ChemicalPlant AmmoniaPlant", 
-                                                        transport_class="N2", propensities=["1","1"], transport_amount=2,
-                                                        propensity_classes=[["N2"], ["N2"]], rule_name="Transport Nitrogen")
-    manufacture_ammonia = SupplyChainRules.SingleLocationProductionRule(target="ChemicalPlant AmmoniaPlant",
-                                                                        reactant_classes=["N2","H2"], reactant_amount=[1,3], 
-                                                                        product_classes=["NH4"],product_amount=[1],propensity="N2*H2",
-                                                                        propensity_classes=["N2", "H2"], rule_name="Make Ammonia")
-    return [transport_nitrogen, manufacture_ammonia]
-
-def supplyChainLocations():
-    ammonia_plant = SupplyChainLocations.ChemicalPlant(1,1,"Example plant")
-    nitrogen_plant = SupplyChainLocations.ChemicalPlant(1,1,"Example plant 2")
-
-    ammonia_plant.addAmmoniaManufacturing()
-    nitrogen_plant.addNitrogenManufacturing()
-    return [ammonia_plant, nitrogen_plant]
-
-#supplyChainClasses = [["NH4", "tonnes"], ["N2", "m^3"], ["H2", "m^3"], ["CH4", "m^3"]]
-
-#model = ModelDefinition(supplyChainClasses, supplyChainLocations, supplyChainRules, model_folder="Backend/ModelFiles/")
-#model.build()

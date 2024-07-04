@@ -24,14 +24,16 @@ class Location:
         self.class_values = self.initial_class_values
 
 class Rule:
-    def __init__(self, propensity, stoichiometry, rule_name) -> None:
+    def __init__(self, propensity, stoichiometry, rule_name, num_builtin_classes) -> None:
         assert (len(stoichiometry) == len(propensity))
         if isinstance(propensity, (list)):
             self.sympy_formula = [sympy.parse_expr(prop_str) for prop_str in propensity]
             self.lambda_propensities = []
             for loc_i, formula in enumerate(self.sympy_formula):
-                symbol_string = ''.join([f'x{str(i)} ' for i in range(len(stoichiometry[loc_i]))])
+                symbol_string = ''.join([f'x{str(i)} ' for i in range(len(stoichiometry[loc_i])+num_builtin_classes)])
                 formula_symbols = sympy.symbols(symbol_string, real=True)
+
+                print(formula_symbols)
                 #symbols = sympy.symbols("".join([f"x{i} " for i in range(len(stoichiometry[loc_i]))]) , real=True)
                 #M = sympy.IndexedBase('x', shape=(dim))
             
@@ -48,13 +50,14 @@ class Rule:
         new_values = class_values + times_triggered*self.stoichiometry[location_index]
         return new_values
     
-    def returnPropensity(self, locations):
+    def returnPropensity(self, locations, builtin_classes):
         assert(len(locations) == len(self.stoichiometry))
         # Assume product operation.
         propensity = 1
         for loc_i, location in enumerate(locations):
             # Apply thresholding here to ensure that no negative propensities are used.
-            propensity *= max(0, self.lambda_propensities[loc_i](*location.class_values))
+            print(self.lambda_propensities[loc_i](*location.class_values, *builtin_classes))
+            propensity *= max(0, self.lambda_propensities[loc_i](*location.class_values, *builtin_classes))
         assert (propensity >= 0)
         return propensity
     

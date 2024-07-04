@@ -81,8 +81,8 @@ def obtainPropensity(rule, locations, builtin_classes):
         for label_i in list(new_label_mapping.keys()):
             new_propensity = new_propensity.replace(new_label_mapping[label_i], f"x{label_i}")
         # Add the built in class at the end of the location classes
-        for builtin_class in builtin_classes:
-            new_propensity = new_propensity.replace(builtin_class[0], f"x{label_i+len(new_label_mapping)}")
+        for built_in_i, builtin_class in enumerate(builtin_classes):
+            new_propensity = new_propensity.replace(builtin_class[0], f"x{built_in_i+len(new_label_mapping)}")
         new_propensities.append(new_propensity)
     print(new_propensities)
     return new_propensities
