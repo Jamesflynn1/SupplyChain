@@ -65,7 +65,7 @@ class Rule:
         assert(isinstance(res, (sympy.core.numbers.Float, sympy.core.numbers.Zero)))
         return True
 
-    def checkRuleDefinition(self, builtin_class_symbols):
+    def checkRuleDefinition(self, builtin_class_symbols, locations_constants):
         for i in range(len(self.targets)):
             if self.stoichiometies[i] is None:
                 raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry."))
@@ -77,7 +77,7 @@ class Rule:
                 raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry class requirement."))
             
         for index in range(len(self.propensities)):
-            symbols = returnSympyClassVarsDict(self.propensity_classes[index]) | builtin_class_symbols
+            symbols = returnSympyClassVarsDict(self.propensity_classes[index]) | builtin_class_symbols | locations_constants[index]
             sympy_formula = sympy.parse_expr(self.propensities[index], local_dict=symbols)
             self.validateFormula(sympy_formula, symbols)
             
@@ -111,12 +111,13 @@ class Rules:
         self.rules = []
         self.defined_classes = defined_classes
         self.model_prefix = "model_"
+        self.location_prefix = "loc_"
 
         builtin_classes = []
 
         for classes in defined_classes:
             if self.model_prefix in classes:
-                builtin_classes.append(classes)
+                builtin_classes.append(classes)                
 
         self.builtin_symbols = returnSympyClassVarsDict(builtin_classes)
     

@@ -4,7 +4,7 @@
             0.0,
             100,
             0.0,
-            10000
+            10.0
         ],
         "label_mapping": {
             "0": "E",
@@ -13,6 +13,9 @@
             "3": "S"
         },
         "lat": 0,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "Test Region",
         "long": 0,
         "transport_distance": [
@@ -36,7 +39,7 @@
             0.0,
             100,
             0.0,
-            2683040
+            2683.04
         ],
         "label_mapping": {
             "0": "E",
@@ -45,6 +48,9 @@
             "3": "S"
         },
         "lat": 54.075,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "North East",
         "long": -2.75,
         "transport_distance": [
@@ -68,7 +74,7 @@
             0.0,
             100,
             0.0,
-            7516113
+            7516.113
         ],
         "label_mapping": {
             "0": "E",
@@ -77,6 +83,9 @@
             "3": "S"
         },
         "lat": 55,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "North West",
         "long": -1.87,
         "transport_distance": [
@@ -100,7 +109,7 @@
             0.0,
             100,
             0.0,
-            5541262
+            5541.262
         ],
         "label_mapping": {
             "0": "E",
@@ -109,6 +118,9 @@
             "3": "S"
         },
         "lat": 53.566667,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "Yorkshire & The Humber",
         "long": -1.2,
         "transport_distance": [
@@ -132,7 +144,7 @@
             0.0,
             100,
             0.0,
-            4934939
+            4934.939
         ],
         "label_mapping": {
             "0": "E",
@@ -141,6 +153,9 @@
             "3": "S"
         },
         "lat": 52.98,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "East Midlands",
         "long": -0.75,
         "transport_distance": [
@@ -164,7 +179,7 @@
             0.0,
             100,
             0.0,
-            6021653
+            6021.653
         ],
         "label_mapping": {
             "0": "E",
@@ -173,6 +188,9 @@
             "3": "S"
         },
         "lat": 52.478861,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "West Midlands",
         "long": -2.256306,
         "transport_distance": [
@@ -196,7 +214,7 @@
             0.0,
             100,
             0.0,
-            6398497
+            6398.497
         ],
         "label_mapping": {
             "0": "E",
@@ -205,6 +223,9 @@
             "3": "S"
         },
         "lat": 52.24,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "East of England",
         "long": 0.41,
         "transport_distance": [
@@ -228,7 +249,7 @@
             0.0,
             100,
             0.0,
-            8866180
+            8866.18
         ],
         "label_mapping": {
             "0": "E",
@@ -237,6 +258,9 @@
             "3": "S"
         },
         "lat": 51.515447,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "London",
         "long": -0.09214,
         "transport_distance": [
@@ -260,7 +284,7 @@
             0.0,
             100,
             0.0,
-            9379833
+            9379.833
         ],
         "label_mapping": {
             "0": "E",
@@ -269,6 +293,9 @@
             "3": "S"
         },
         "lat": 51.3,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "South East",
         "long": -0.8,
         "transport_distance": [
@@ -292,7 +319,7 @@
             0.0,
             100,
             0.0,
-            5764881
+            5764.881
         ],
         "label_mapping": {
             "0": "E",
@@ -301,6 +328,9 @@
             "3": "S"
         },
         "lat": 50.96,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "South West",
         "long": -3.22,
         "transport_distance": [
@@ -324,7 +354,7 @@
             0.0,
             100,
             0.0,
-            5447700
+            5447.7
         ],
         "label_mapping": {
             "0": "E",
@@ -333,6 +363,9 @@
             "3": "S"
         },
         "lat": 56.816738,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "Scotland",
         "long": -4.183963,
         "transport_distance": [
@@ -356,7 +389,7 @@
             0.0,
             100,
             0.0,
-            3131640
+            3131.64
         ],
         "label_mapping": {
             "0": "E",
@@ -365,6 +398,9 @@
             "3": "S"
         },
         "lat": 52.33022,
+        "location_constants": {
+            "regional_inf": 0.2
+        },
         "location_name": "Wales",
         "long": -3.766409,
         "transport_distance": [

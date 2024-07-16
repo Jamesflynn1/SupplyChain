@@ -72,17 +72,21 @@ def returnRuleMatchingIndices(rules, locations):
 
 # Return the final propensity for a given rule provided concrete locations. 
 # Assumption that locations of the same type have the same compartments.
-def obtainPropensity(rule, locations, builtin_classes):
+def obtainPropensity(rule, locations, builtin_classes, location_const_prefix = "loc_"):
     propensities = rule["propensities"]
     new_propensities = []
     for location_i, location in enumerate(locations):
         new_propensity = propensities[location_i]
         new_label_mapping = location["label_mapping"]
+        # Order: model var, location const, location class
+        for built_in_i, builtin_class in enumerate(builtin_classes):
+            new_propensity = new_propensity.replace(builtin_class[0], f"x{built_in_i+len(new_label_mapping)}")
+        for constant in list(location["model_constants"].keys()):
+            new_propensity = new_propensity.replace(location_const_prefix+constant, str(location["model_constants"][constant]))
         for label_i in list(new_label_mapping.keys()):
             new_propensity = new_propensity.replace(new_label_mapping[label_i], f"x{label_i}")
         # Add the built in class at the end of the location classes
-        for built_in_i, builtin_class in enumerate(builtin_classes):
-            new_propensity = new_propensity.replace(builtin_class[0], f"x{built_in_i+len(new_label_mapping)}")
+
         new_propensities.append(new_propensity)
     print(new_propensities)
     return new_propensities

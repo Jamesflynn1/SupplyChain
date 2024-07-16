@@ -86,5 +86,4 @@ class ModelState:
         self.updateCalendarInfo()
         
     def returnModelClassesValues(self):
-        print(self.model_classes.values())
         return self.model_classes.values()

@@ -16,7 +16,6 @@ class ModelBackend:
         self.location_filename = location_filename
         self.model_folder = model_folder
         self.classes_dict, self.builtin_classes_dict = ModelLoader.loadClasses(self.model_folder+classes_filename)
-        print(self.builtin_classes_dict)
         self.locations = ModelLoader.loadLocations(self.model_folder+self.location_filename)
         self.rules, self.matched_indices = ModelLoader.loadMatchedRules(self.model_folder+self.matched_rules_filename, num_builtin_classes=len(self.builtin_classes_dict))
 
@@ -37,7 +36,7 @@ class ModelBackend:
 
 
 
-    def simulate(self, time_limit, max_iterations = 100000):
+    def simulate(self, time_limit, max_iterations = 1000):
         self.resetModel()
         while self.model_state.elapsed_time < time_limit and self.model_state.iterations <= max_iterations:
              # Simulate one step should update the location objects automatically with the new compartment values.
@@ -47,7 +46,6 @@ class ModelBackend:
              for location_index, location in enumerate(self.locations):
                 self.trajectory.addEntry(new_time, location.class_values, location_index)
 
-             print(new_time)
              if new_time is None:
                  break
         return self.trajectory
