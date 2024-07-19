@@ -14,7 +14,7 @@ def returnSympyClassVarsDict(classes):
 
 
 class Rule:
-    def __init__(self, rule_name, targets):
+    def __init__(self, rule_name:str, targets:list):
 
         self.rule_name = rule_name
 
@@ -65,7 +65,7 @@ class Rule:
         assert(isinstance(res, (sympy.core.numbers.Float, sympy.core.numbers.Zero)))
         return True
 
-    def checkRuleDefinition(self, builtin_class_symbols, locations_constants):
+    def checkRuleDefinition(self, builtin_class_symbols, locations_constant_symbols):
         for i in range(len(self.targets)):
             if self.stoichiometies[i] is None:
                 raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry."))
@@ -77,7 +77,7 @@ class Rule:
                 raise(ValueError(f"Incorrect rule definition for {self.rule_name}\nThe Location type {self.targets[i]} at rule position {str(i+1)} has no defined stochiometry class requirement."))
             
         for index in range(len(self.propensities)):
-            symbols = returnSympyClassVarsDict(self.propensity_classes[index]) | builtin_class_symbols | locations_constants[index]
+            symbols = returnSympyClassVarsDict(self.propensity_classes[index]) | builtin_class_symbols | locations_constant_symbols
             sympy_formula = sympy.parse_expr(self.propensities[index], local_dict=symbols)
             self.validateFormula(sympy_formula, symbols)
             
@@ -97,8 +97,9 @@ class Rule:
             self.stoichiometies[i] = list(new_stoichiometry)
             self.rule_classes.append(tmp_rule_class_dict)
         
-    def returnRuleDict(self, builtin_class_symbols):
-        self.checkRuleDefinition(builtin_class_symbols)
+    def returnRuleDict(self):
+        # Check performed in Rules class
+        # self.checkRuleDefinition(builtin_class_symbols, locations_constants)
         self.mergeClassLists()
 
         # UNPACK DEF TO SPECIFIC LOCATION
@@ -107,7 +108,7 @@ class Rule:
         return rule_dict
 
 class Rules:
-    def __init__(self, defined_classes):
+    def __init__(self, defined_classes, location_constants : list):
         self.rules = []
         self.defined_classes = defined_classes
         self.model_prefix = "model_"
@@ -117,9 +118,12 @@ class Rules:
 
         for classes in defined_classes:
             if self.model_prefix in classes:
-                builtin_classes.append(classes)                
+                builtin_classes.append(classes)
+
 
         self.builtin_symbols = returnSympyClassVarsDict(builtin_classes)
+        # DOESN'T CHECK FOR EXISTENCE OF CONSTANTS FOR EACH LOCATION - THIS IS DONE IN THE RULE MATCHING
+        self.location_constants_symbols = returnSympyClassVarsDict(location_constants)
     
     def addRule(self, rule:Rule):
         if isinstance(rule, Rule):
@@ -133,7 +137,7 @@ class Rules:
     
     def checkRules(self):
         for rule in self.rules:
-            rule.checkRuleDefinition(self.builtin_symbols)
+            rule.checkRuleDefinition(self.builtin_symbols, self.location_constants_symbols)
 
             for propensity_class_index in range(len(rule.propensity_classes)):
                 location_propensity_class = rule.propensity_classes[propensity_class_index]
@@ -149,11 +153,11 @@ class Rules:
                         raise ValueError(f"Class required for the stoichiometry, {loc_stoich_class} not defined (Rule name: {rule.rule_name})")
         return True
 
-    def writeJSON(self, filename):
+    def writeJSON(self, filename:str):
         self.checkRules()
         rules_dict = {}
         for i, rule in enumerate(self.rules):
-            rule_dict = rule.returnRuleDict(self.builtin_symbols)
+            rule_dict = rule.returnRuleDict()
             rules_dict[i] = rule_dict
         
         json_rules = json.dumps(rules_dict, indent=4, sort_keys=True)

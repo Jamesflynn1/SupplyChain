@@ -3,24 +3,30 @@ import numpy as np
 import json
 
 class Location:
-    def __init__(self, lat, long, name, loc_type, constants = None):
+    def __init__(self, lat:float, long:float, name:str, loc_type:str, constants = None, loc_prefix:str="loc_"):
         self.lat = lat
         self.long = long
         self.name = name
         self.class_labels = set([])
         self.loc_type = loc_type
+        self.loc_prefix = loc_prefix
 
         # Constants will not be saved at the moment and will be replaced in rule matching.
-        if constants is not None:
-            self.location_constants = {constant:None for constant in constants}
-        else:
-            self.location_constants = None
+        
+        self.location_constants = None
+        self.addConstants(constants)
 
         self.locations_variables = {}
 
         self.inital_conditions_dict = None
-    
-    def checkConditionDict(self, inital_conditions_dict):
+
+    def addConstants(self, constants):
+        if constants is not None:
+            if self.location_constants is None:
+                self.location_constants = {}
+            self.location_constants = self.location_constants|{self.loc_prefix+constant:None for constant in constants}
+
+    def checkConditionDict(self, inital_conditions_dict:dict):
         for condition_class in inital_conditions_dict:
             if condition_class not in self.class_labels:
                 raise(ValueError(f"Initial condition class {condition_class} not present at location {self.name}."))
@@ -31,19 +37,29 @@ class Location:
                 if self.location_constants[constant] is None:
                     raise(ValueError(f"Location constant {constant} not defined at location {self.name}."))
     
-    def setInitialConditions(self, inital_conditions_dict):
+    def setInitialConditions(self, inital_conditions_dict:dict):
         # check all classes are defined
         self.checkConditionDict(inital_conditions_dict)
         self.inital_conditions_dict = inital_conditions_dict
 
-    def setConstants(self, constants_dict):
+    def setDistances(self, distances):
+        self.addConstants([f"distance_{i}" for i in range(len(distances))])
+        self.setConstants({f"distance_{i}":distance for i, distance in enumerate(distances)})
+    
+    def setConstants(self, constants_dict:dict):
         current_constant_keys = list(self.location_constants.keys())
         for entered_constant in list(constants_dict.keys()):
-            if entered_constant in current_constant_keys:
-                self.location_constants[entered_constant] = constants_dict[entered_constant]
+            if self.loc_prefix+entered_constant in current_constant_keys:
+                self.location_constants[self.loc_prefix+entered_constant] = constants_dict[entered_constant]
             else:
-                raise(ValueError(f"Provided constant {entered_constant}, does not exist at current location {self.name}"))
-        
+                raise(ValueError(f"Provided constant {entered_constant}, does not exist at current location {self.name}\n Defined location constants: {str(self.location_constants)}"))
+            
+    def returnConstantNames(self):
+        if self.location_constants is not None:
+            return list(self.location_constants.keys())
+        else:
+            return []
+
     def returnDictDescription(self):
         #For ease of use and to ensure compartment label order is invariant to order construction functions are called.
         self.checkConstantsDefined()
@@ -72,6 +88,8 @@ class Locations:
         self.locations = []
         self.defined_classes = defined_classes
         self.distance_function = distance_function
+
+        self.type_register = {}
         
     def checkLocationClassesDefined(self):
         for location in self.locations:
@@ -80,16 +98,26 @@ class Locations:
                     raise ValueError(f"Class {location_class_label} not defined (Location name: {location.name})")
         return True
     
-    def writeJSON(self, filename):
-        self.checkLocationClassesDefined()
+    def returnAllLocationConstantNames(self):
+        constant_names = set([])
+        for location in self.locations:
+            constant_names.update(location.returnConstantNames())
+        return list(constant_names)
+    
+    def computeAndSaveDistances(self):
         self.coords =  np.array(self.coords)
         distance_matrix =  self.distance_function(self.coords[0,:], self.coords[1,:])
+        for i, x in enumerate(self.locations):
+            x.setDistances(list(distance_matrix[i,:].flatten()))
+
+    def writeJSON(self, filename:str):
+        self.checkLocationClassesDefined()
+        self.computeAndSaveDistances()
 
         locations_dict = {}
 
         for i, x in enumerate(self.locations):
             location_dict = x.returnDictDescription()
-            location_dict["transport_distance"] = list(distance_matrix[i,:].flatten())
             locations_dict[i] = location_dict
 
         json_locations = json.dumps(locations_dict, indent=4, sort_keys=True)
@@ -99,14 +127,29 @@ class Locations:
         
         return locations_dict
     
-    def addCoordinates(self, lat, long):
+    def addCoordinates(self, lat:float, long:float):
         self.coords[0].append(lat)
         self.coords[1].append(long)
+    
+    def registerTypeClass(self, type_str:str, type_class):
+        if type_str in self.type_register:
+            raise(ValueError(f"Type {type_str} already has an associated class {str(self.type_register[type_str])}"))
+        else:
+            self.type_register[type_str] = type_class
 
-    def addLocation(self, location:Location):
+    def addLocation(self, location):
         if isinstance(location, Location):
-            self.locations.append(location)
-            self.addCoordinates(location.lat, location.long)
+            if location.loc_type in self.type_register:
+                # Want explicit type here rather than inclusive of subclasses
+                if type(location) == self.type_register[location.loc_type]:
+                    self.locations.append(location)
+                    self.addCoordinates(location.lat, location.long)
+                else:
+                    raise(TypeError(f"Location type {location.loc_type} is already associated with class {self.type_register[location.loc_type]}, not class {type(location)}"))
+            else:
+                self.registerTypeClass(location.loc_type, type(location))
+                self.locations.append(location)
+                self.addCoordinates(location.lat, location.long)
         else:
             raise(TypeError(f"location is not a child type of Location base class (type: {type(location)})"))
         

@@ -39,7 +39,7 @@
             ]
         ],
         "propensity": [
-            "y0*2*x1*x3/(x3+x0+x1+x2)*x10 +2*x1*x3/(x3+x0+x1+x2)*x9"
+            "0.2*2*x1*x3/(x3+x0+x1+x2)*x10 +2*x1*x3/(x3+x0+x1+x2)*x9"
         ],
         "rule_location_types": "Region",
         "rule_name": "Exposure",
