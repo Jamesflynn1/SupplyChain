@@ -29,11 +29,13 @@ class ModelDefinition:
         all_locations = ModelLocations.Locations(self.defined_classes, self.distance_func)
         locations = self.create_locations_func()
         all_locations.addLocations(locations)
+        # Distance computation done as part of writeJSON - set as location constants
         self.locations = all_locations.writeJSON(f"{self.model_folder}{self.location_filename}")
+        self.location_constants = all_locations.returnAllLocationConstantNames()
 
     def createRules(self):
         # Use np.identity(len()) .... for no change
-        all_rules = ModelRules.Rules(self.defined_classes)
+        all_rules = ModelRules.Rules(self.defined_classes, self.location_constants)
 
         rules = self.create_rules_func()
         all_rules.addRules(rules)
