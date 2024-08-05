@@ -8,22 +8,27 @@ class ModelState:
         self.MONTHS =  ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sept", "oct", "nov", "dec"]
         self.model_prefix = "model_"
 
-        IMPLEMENTED_MODEL_CLASSES = [f"model.{var}" for var in ["day", "hour", "months"]]
-        IMPLEMENTED_MODEL_CLASSES += [f"model.month.{month}" for month in self.MONTHS]
+        self.IMPLEMENTED_MODEL_CLASSES = [f"model_{var}" for var in ["day", "hour", "months"]]
+        self.IMPLEMENTED_MODEL_CLASSES += [f"model_month_{month}" for month in self.MONTHS]
         self.model_classes = {}
 
         self.time_measurement = "days"
 
         for model_class in model_classes:
-            if model_class in IMPLEMENTED_MODEL_CLASSES:
-                print(f"{model_class} not implemented")
+            if model_class in self.IMPLEMENTED_MODEL_CLASSES:
+                self.model_classes[model_class] = None
+                print(f"{model_class} implemented")
             else:
                 self.model_classes[model_class] = None
+                raise(ValueError(f"Model class {model_class} not implemented"))
 
 
         self.elapsed_time = 0
         self.iterations = 0
         self.current_month = None
+
+        self.changed_vars = [classes for classes in list(self.model_classes.keys())]
+
 
         if isinstance(start_datetime, datetime):
             self.start_datetime = start_datetime
@@ -36,14 +41,14 @@ class ModelState:
         self.elapsed_time = 0
         self.iterations = 0
         self.current_datetime = self.start_datetime
-
+        self.changed_vars = [classes for classes in list(self.model_classes.keys())]
         self.updateCalendarInfo()
 
     # Convert the self.current_datetime into model variables used
     def initaliseCalendarInfo(self):
         # Initialise all indicators to zero and perform the standard update step.
-        for month in self.MONTHS:
-            self.model_classes[f"{self.model_prefix}month_{month}"] = 0
+        for key in self.IMPLEMENTED_MODEL_CLASSES:
+            self.model_classes[key] = 0
         self.updateCalendarInfo()
     
     def updateCalendarInfo(self):
@@ -53,17 +58,35 @@ class ModelState:
 
         month_index = current_datetime_info[1]-1
 
-        if not self.current_month is None:
+        if self.current_month is None:
+            self.model_classes[f"{self.model_prefix}month_{self.MONTHS[month_index]}"] = 1
+            self.model_classes[f"{self.model_prefix}months"] =  current_datetime_info[1]
+            self.current_month = self.MONTHS[month_index]
+
+        if not self.current_month == self.MONTHS[month_index]:
+            self.changed_vars.append(f"{self.model_prefix}month_{self.current_month}")
+            self.changed_vars.append(f"{self.model_prefix}month_{self.MONTHS[month_index]}")
+            self.changed_vars.append(f"{self.model_prefix}months")
+
             self.model_classes[f"{self.model_prefix}month_{self.current_month}"] = 0
+            self.model_classes[f"{self.model_prefix}month_{self.MONTHS[month_index]}"] = 1
+            self.current_month = self.MONTHS[month_index]
+            self.model_classes[f"{self.model_prefix}months"] =  current_datetime_info[1]
 
-        self.model_classes[f"{self.model_prefix}month_{self.MONTHS[month_index]}"] = 1
-        self.current_month = self.MONTHS[month_index]
+            # Variables that need their propensities updating
 
-        self.model_classes[f"{self.model_prefix}months"] =  current_datetime_info[1]
-        self.model_classes[f"{self.model_prefix}day"] = current_datetime_info[2]
-        self.model_classes[f"{self.model_prefix}hour"] = current_datetime_info[4] + current_datetime_info[5]/60.0
+        if not self.model_classes[f"{self.model_prefix}day"] == current_datetime_info[2]:
+            self.model_classes[f"{self.model_prefix}day"] = current_datetime_info[2]
+            self.changed_vars.append(f"{self.model_prefix}day")
+        
+        rounded_hours = round(current_datetime_info[4]/60.0, 1)
+        if not self.model_classes[f"{self.model_prefix}hour"] == current_datetime_info[3] + rounded_hours:
+            self.model_classes[f"{self.model_prefix}hour"] = current_datetime_info[3] + rounded_hours
+            self.changed_vars.append(f"{self.model_prefix}hour")
+
 
     def processUpdate(self, new_time):
+        self.changed_vars = []
         if new_time == None:
             print("Ending model simulation")
             return
@@ -87,3 +110,9 @@ class ModelState:
         
     def returnModelClassesValues(self):
         return self.model_classes.values()
+    
+    def returnModelClasses(self):
+        return list(self.model_classes.values())
+                    
+    def returnChangedVars(self):
+        return self.changed_vars

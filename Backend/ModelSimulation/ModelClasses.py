@@ -4,13 +4,12 @@ import sympy
 import matplotlib.pyplot as plt
 
 class Location:
-    def __init__ (self, name, lat, long, loc_type, label_mapping, transport_distance, initial_class_values):
+    def __init__ (self, name, lat, long, loc_type, label_mapping, initial_class_values):
         self.name = name
         self.lat = lat
         self.long = long
         self.loc_type = loc_type
         self.label_mapping = label_mapping
-        self.transport_distance = transport_distance
 
         self.initial_class_values = initial_class_values
         self.class_values = initial_class_values
@@ -48,6 +47,7 @@ class Rule:
     
     def locationAttemptedCompartmentChange(self, class_values, location_index, times_triggered):
         new_values = class_values + times_triggered*self.stoichiometry[location_index]
+
         return new_values
     
     def returnPropensity(self, locations, builtin_classes):
@@ -56,7 +56,7 @@ class Rule:
         propensity = 1
         for loc_i, location in enumerate(locations):
             # Apply thresholding here to ensure that no negative propensities are used.
-            print(self.lambda_propensities[loc_i](*location.class_values, *builtin_classes))
+            # print(self.lambda_propensities[loc_i](*location.class_values, *builtin_classes))
             propensity *= max(0, self.lambda_propensities[loc_i](*location.class_values, *builtin_classes))
         assert (propensity >= 0)
         return propensity

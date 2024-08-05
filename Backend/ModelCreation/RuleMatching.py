@@ -137,7 +137,7 @@ def obtainStochiometry(rule, locations):
 
 def writeMatchedRuleJSON(rules, locations, filename, builtin_classes):
     matched_rules = returnRuleMatchingIndices(rules, locations)
-    
+    builtin_classes = sorted(builtin_classes)
     concrete_match_rules_dict = {}
     concrete_rules = 0
     for rule_i in range(len(matched_rules)):

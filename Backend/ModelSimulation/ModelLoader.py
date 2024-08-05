@@ -17,7 +17,7 @@ def loadLocations(locations_filename):
     for loc_index in range(len(locations_data)):
         location_dict = locations_data[str(loc_index)]
         location = ModelClasses.Location(name=location_dict["location_name"], lat = location_dict["lat"], long = location_dict["long"], loc_type = location_dict["type"],
-                                         label_mapping=location_dict["label_mapping"], transport_distance=location_dict["transport_distance"],
+                                         label_mapping=location_dict["label_mapping"],
                                          initial_class_values=np.array(location_dict["initial_values"]))
         location_list.append(location)
     return location_list
