@@ -1,5 +1,7 @@
 import numpy as np
 import ModelState
+
+import collections
 class Solver:
     def __init__(self, locations, rules, matched_indices, model_state:ModelState.ModelState, use_cached_propensities:bool = True, propensity_update_dict:dict = {}):
         self.locations = locations
@@ -12,6 +14,8 @@ class Solver:
         self.last_rule_index_set = None
 
         self.propensities = {}
+        if self.use_cached_propensities:
+            self.total_propensity = 0
         self.propensity_update_dict = propensity_update_dict
 
     def simulateOneStep(self):
@@ -26,13 +30,20 @@ class Solver:
             for rule_i in range(len(self.matched_indices)):
                 rule = self.rules[rule_i]
                 for index_set_i in range(len(self.matched_indices[rule_i])):
-                    self.propensities[f"{rule_i} {index_set_i}"] = rule.returnPropensity(np.take(self.locations, self.matched_indices[rule_i][index_set_i]),
+                    new_propensity = rule.returnPropensity(np.take(self.locations, self.matched_indices[rule_i][index_set_i]),
                                                    model_state_values)
+                    if self.use_cached_propensities:
+                        self.total_propensity += (new_propensity - self.propensities.get(f"{rule_i} {index_set_i}", 0.0))
+                    self.propensities[f"{rule_i} {index_set_i}"] = new_propensity
         else:
             for rule_i, index_set_i in rules_and_matched_indices:
                 rule = self.rules[rule_i]
-                self.propensities[f"{rule_i} {index_set_i}"] = rule.returnPropensity(np.take(self.locations, self.matched_indices[rule_i][index_set_i]),
+                new_propensity = rule.returnPropensity(np.take(self.locations, self.matched_indices[rule_i][index_set_i]),
                                                                                      model_state_values)
+                if self.use_cached_propensities:
+                    self.total_propensity += (new_propensity - self.propensities.get(f"{rule_i} {index_set_i}", 0.0))
+                self.propensities[f"{rule_i} {index_set_i}"] = new_propensity
+
     def performPropensityUpdates(self):
         if not self.last_rule_index_set is None:
             rule_prop_update_set = self.propensity_update_dict[self.last_rule_index_set]
@@ -53,7 +64,10 @@ class Solver:
 
     # CACHE TOTAL PROPENSITY AND UPDATE USING DIFF BETWEEN OLD AND NEW CACHE VALUES.
     def returnTotalPropensity(self):
-        return np.sum(list(self.propensities.values()))
+        if not self.use_cached_propensities:
+            return np.sum(list(self.propensities.values()))
+        else:
+            return self.total_propensity
 class GillespieSolver(Solver):
     def __init__(self, locations, rules, matched_indices, model_state:ModelState.ModelState, use_cached_propensities:bool = True, propensity_update_dict:dict = {}):
         super().__init__(locations, rules, matched_indices, model_state, use_cached_propensities, propensity_update_dict)

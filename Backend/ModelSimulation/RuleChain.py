@@ -30,7 +30,6 @@ def ruleToClassesDict(rules, matched_indices):
         for index_set_i in range(len(matched_indices[rule_i])):
             for slot_i, loc_i in enumerate(matched_indices[rule_i][index_set_i]):
                 #rtc_dict[f"{rule_i} {index_set_i}"].update([f"{str(symbol)} {loc_i}" for symbol in loc_symbols])
-                print(rule.stoichiometry[slot_i][0])
                 rtc_dict[f"{rule_i} {index_set_i}"].update([f"x{i} {loc_i}" for i in range(len(rule.stoichiometry[slot_i])) if not rule.stoichiometry[slot_i][i] == 0])
     return rtc_dict
 
