@@ -16,14 +16,14 @@ def loadLocations(locations_filename):
         locations_data = json.load(locations_file)
     for loc_index in range(len(locations_data)):
         location_dict = locations_data[str(loc_index)]
-        location = ModelClasses.Location(name=location_dict["location_name"], lat = location_dict["lat"], long = location_dict["long"], loc_type = location_dict["type"],
+        location = ModelClasses.Location(index=loc_index, name=location_dict["location_name"], lat=location_dict["lat"], long=location_dict["long"], loc_type=location_dict["type"],
                                          label_mapping=location_dict["label_mapping"],
-                                         initial_class_values=np.array(location_dict["initial_values"]))
+                                         initial_class_values=np.array(location_dict["initial_values"]), location_constants=location_dict["location_constants"])
         location_list.append(location)
     return location_list
     
 
-def loadMatchedRules(matched_rules_filename, num_builtin_classes):
+def loadMatchedRules(matched_rules_filename, locations,  num_builtin_classes):
     """ Loads all rules from a model matched rules json (see ModelCreation for details).
 
     Parameters: 
@@ -46,7 +46,7 @@ def loadMatchedRules(matched_rules_filename, num_builtin_classes):
         for loc_propensity in rules_dict["propensity"]:
             propensities.append(loc_propensity)
 
-        rule = ModelClasses.Rule(propensity=propensities, stoichiometry=stochiometries, rule_name=rules_dict["rule_name"], num_builtin_classes=num_builtin_classes)
+        rule = ModelClasses.Rule(propensity=propensities, stoichiometry=stochiometries, rule_name=rules_dict["rule_name"], num_builtin_classes=num_builtin_classes, locations=locations, rule_index_sets=rules_dict["matching_indices"])
         applicable_indices.append(rules_dict["matching_indices"])
         rules_list.append(rule)
     return [rules_list, applicable_indices]

@@ -55,11 +55,12 @@ class ChemicalPlant(ModelLocations.Location):
             raise(ValueError("Already added Nitrogen manufacturing"))
     
 class FarmRegion(ModelLocations.Location):
-    def __init__(self, crops, lat, long, name):
+    def __init__(self, crops_to_stage:dict, lat:float, long:float, name:str, constants = None):
         # Sets lat/long and creates and empty set of compartment labels.
-        super().__init__(lat, long, name, loc_type="FarmRegion")
+        super().__init__(lat, long, name, loc_type="FarmRegion", constants=constants)
         # Crops exist in three stages in this simplified model: planted, growing and harvested.
-        crop_stages = ["Seeds_", "Planted_", "Growing_", "Viable_", "Harvested_"]
+
+        crops = list(crops_to_stage.keys())
         for crop in crops:
-            for stage in crop_stages:
-                self.class_labels.add(stage+crop)
+            for stage in crops_to_stage[crop]:
+                self.class_labels.add(f"{crop}_{stage}")

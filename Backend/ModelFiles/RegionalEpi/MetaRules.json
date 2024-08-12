@@ -2,7 +2,7 @@
     "0": {
         "name": "Exposure",
         "propensities": {
-            "0": "loc_regional_inf*2*I*S/(S+E+I+R)*model_month_jan +2*I*S/(S+E+I+R)*model_month_feb"
+            "0": "loc_regional_inf*2*I*S/(S+E+I+R)*model_month_jan +loc_regional_inf*2*I*S/(S+E+I+R)*model_month_feb"
         },
         "required_classes": [
             {
@@ -82,120 +82,6 @@
             ]
         },
         "target_types": [
-            "Region"
-        ]
-    },
-    "4": {
-        "name": "Movement",
-        "propensities": {
-            "0": "0.001*S",
-            "1": "1"
-        },
-        "required_classes": [
-            {
-                "0": "S"
-            },
-            {
-                "0": "S"
-            }
-        ],
-        "stoichiometries": {
-            "0": [
-                -1.0
-            ],
-            "1": [
-                1.0
-            ]
-        },
-        "target_types": [
-            "Region",
-            "Region"
-        ]
-    },
-    "5": {
-        "name": "Movement",
-        "propensities": {
-            "0": "0.001*E",
-            "1": "1"
-        },
-        "required_classes": [
-            {
-                "0": "E"
-            },
-            {
-                "0": "E",
-                "1": "S"
-            }
-        ],
-        "stoichiometries": {
-            "0": [
-                -1.0
-            ],
-            "1": [
-                1.0,
-                0.0
-            ]
-        },
-        "target_types": [
-            "Region",
-            "Region"
-        ]
-    },
-    "6": {
-        "name": "Movement",
-        "propensities": {
-            "0": "0.0001*I",
-            "1": "1"
-        },
-        "required_classes": [
-            {
-                "0": "I"
-            },
-            {
-                "0": "I",
-                "1": "S"
-            }
-        ],
-        "stoichiometries": {
-            "0": [
-                -1.0
-            ],
-            "1": [
-                1.0,
-                0.0
-            ]
-        },
-        "target_types": [
-            "Region",
-            "Region"
-        ]
-    },
-    "7": {
-        "name": "Movement",
-        "propensities": {
-            "0": "0.001*R",
-            "1": "1"
-        },
-        "required_classes": [
-            {
-                "0": "R"
-            },
-            {
-                "0": "R",
-                "1": "S"
-            }
-        ],
-        "stoichiometries": {
-            "0": [
-                -1.0
-            ],
-            "1": [
-                1.0,
-                0.0
-            ]
-        },
-        "target_types": [
-            "Region",
             "Region"
         ]
     }

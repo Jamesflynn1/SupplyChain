@@ -19,7 +19,7 @@ class ModelBackend:
         self.model_folder = model_folder
         self.classes_dict, self.builtin_classes_dict = ModelLoader.loadClasses(self.model_folder+classes_filename)
         self.locations = ModelLoader.loadLocations(self.model_folder+self.location_filename)
-        self.rules, self.matched_indices = ModelLoader.loadMatchedRules(self.model_folder+self.matched_rules_filename, num_builtin_classes=len(self.builtin_classes_dict))
+        self.rules, self.matched_indices = ModelLoader.loadMatchedRules(self.model_folder+self.matched_rules_filename, self.locations, num_builtin_classes=len(self.builtin_classes_dict))
 
         self.model_state = ModelState.ModelState(self.builtin_classes_dict, start_date)
 
@@ -42,8 +42,6 @@ class ModelBackend:
         self.trajectory = ModelClasses.Trajectory(self.locations)
         self.model_state.reset()
         self.solver.reset()
-
-
 
     def simulate(self, time_limit, max_iterations:int = 1000):
         self.resetModel()

@@ -14,13 +14,16 @@ class Location:
         # Constants will not be saved at the moment and will be replaced in rule matching.
         
         self.location_constants = None
-        self.addConstants(constants)
+        if isinstance(constants, dict):
+            self.addAndSetConstants(constants)
+        elif isinstance(constants, list):
+            self.addConstants(constants)
 
         self.locations_variables = {}
 
         self.inital_conditions_dict = None
 
-    def addConstants(self, constants):
+    def addConstants(self, constants:list):
         if constants is not None:
             if self.location_constants is None:
                 self.location_constants = {}
@@ -42,7 +45,7 @@ class Location:
         self.checkConditionDict(inital_conditions_dict)
         self.inital_conditions_dict = inital_conditions_dict
 
-    def setDistances(self, distances):
+    def setDistances(self, distances:list):
         self.addConstants([f"distance_{i}" for i in range(len(distances))])
         self.setConstants({f"distance_{i}":distance for i, distance in enumerate(distances)})
     
@@ -54,6 +57,9 @@ class Location:
             else:
                 raise(ValueError(f"Provided constant {entered_constant}, does not exist at current location {self.name}\n Defined location constants: {str(self.location_constants)}"))
             
+    def addAndSetConstants(self, constants_dict:dict):
+        self.addConstants(list(constants_dict.keys()))
+        self.setConstants(constants_dict)
     def returnConstantNames(self):
         if self.location_constants is not None:
             return list(self.location_constants.keys())

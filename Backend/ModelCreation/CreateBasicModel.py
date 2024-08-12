@@ -1,6 +1,6 @@
 import numpy as np
 import SupplyChainLocations
-import SupplyChainRules
+import Backend.ModelCreation.BasicRules as BasicRules
 import RuleMatching
 import json
 
@@ -24,7 +24,7 @@ class ModelDefinition:
 
     def createRules(self):
         # Use np.identity(len()) .... for no change
-        all_rules = SupplyChainRules.Rules()
+        all_rules = BasicRules.Rules()
 
     
         # Move Hydrogen from a supplier

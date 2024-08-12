@@ -82,12 +82,6 @@ def obtainPropensity(rule, locations, builtin_classes):
         # Order: model var, location const, location class
         for built_in_i, builtin_class in enumerate(builtin_classes):
             new_propensity = new_propensity.replace(builtin_class[0], f"x{built_in_i+len(new_label_mapping)}")
-
-        constant_num = 0
-        for constant in list(location["location_constants"].keys()):
-            new_propensity = new_propensity.replace(constant, f"y{constant_num}")
-            loc_used_constants[f"y{constant_num}"] = constant
-            constant_num += 1
             
 
         for label_i in list(new_label_mapping.keys()):
