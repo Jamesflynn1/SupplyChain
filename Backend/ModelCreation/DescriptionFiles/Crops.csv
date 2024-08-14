@@ -1,2 +1,2 @@
-Crop,First Stage,Capacity Constant Name,Plant Period,Harvest Period
-Wheat,GS10,Wheat,Sep Oct,Aug
+Crop,First Stage,Capacity Constant Name,Plant Period,Harvest Period,Starting Seeds
+Wheat,GS10,Wheat,sept oct,aug, 10000

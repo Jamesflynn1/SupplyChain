@@ -1,0 +1,366 @@
+{
+    "0": {
+        "name": "Wheat GS10 to GS30 Crop Growth",
+        "propensities": {
+            "0": "Wheat_GS10*1"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS10",
+                "1": "Wheat_GS30"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "1": {
+        "name": "Wheat GS10 Decay",
+        "propensities": {
+            "0": "Wheat_GS10*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS10"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "2": {
+        "name": "Wheat GS30 to GS31 Crop Growth",
+        "propensities": {
+            "0": "Wheat_GS30*1"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS30",
+                "1": "Wheat_GS31"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "3": {
+        "name": "Wheat GS30 Decay",
+        "propensities": {
+            "0": "Wheat_GS30*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS30"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "4": {
+        "name": "Wheat GS31 to GS39 Crop Growth",
+        "propensities": {
+            "0": "Wheat_GS31*1"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS31",
+                "1": "Wheat_GS39"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "5": {
+        "name": "Wheat GS31 Decay",
+        "propensities": {
+            "0": "Wheat_GS31*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS31"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "6": {
+        "name": "Wheat GS39 to GS59 Crop Growth",
+        "propensities": {
+            "0": "Wheat_GS39*1"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS39",
+                "1": "Wheat_GS59"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "7": {
+        "name": "Wheat GS39 Decay",
+        "propensities": {
+            "0": "Wheat_GS39*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS39"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "8": {
+        "name": "Wheat GS59 to GS61 Crop Growth",
+        "propensities": {
+            "0": "Wheat_GS59*1"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS59",
+                "1": "Wheat_GS61"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "9": {
+        "name": "Wheat GS59 Decay",
+        "propensities": {
+            "0": "Wheat_GS59*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS59"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "10": {
+        "name": "Wheat GS61 to GS71 Crop Growth",
+        "propensities": {
+            "0": "Wheat_GS61*1"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS61",
+                "1": "Wheat_GS71"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "11": {
+        "name": "Wheat GS61 Decay",
+        "propensities": {
+            "0": "Wheat_GS61*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS61"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "12": {
+        "name": "Wheat GS71 to GS87 Crop Growth",
+        "propensities": {
+            "0": "Wheat_GS71*1"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS71",
+                "1": "Wheat_GS87"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "13": {
+        "name": "Wheat GS71 Decay",
+        "propensities": {
+            "0": "Wheat_GS71*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS71"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "14": {
+        "name": "Wheat GS87 to   Crop Growth",
+        "propensities": {
+            "0": "Wheat_GS87*1"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS87",
+                "1": "Wheat_Harvested"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "15": {
+        "name": "Wheat GS87 Decay",
+        "propensities": {
+            "0": "Wheat_GS87*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS87"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "16": {
+        "name": "Wheat planting",
+        "propensities": {
+            "0": "(model_month_sept+model_month_oct)*Wheat_Seeds*(loc_Wheat - Wheat_Planted)"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS10",
+                "1": "Wheat_Planted",
+                "2": "Wheat_Seeds"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1000.0,
+                1000.0,
+                -1000.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "17": {
+        "name": "Productive Wheat harvest",
+        "propensities": {
+            "0": "(model_month_aug)*Wheat_GS87"
+        },
+        "required_classes": [
+            {
+                "0": "Wheat_GS87",
+                "1": "Wheat_Harvested"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -1.0,
+                1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    }
+}

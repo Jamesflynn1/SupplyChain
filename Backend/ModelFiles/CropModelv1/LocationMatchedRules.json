@@ -1,0 +1,992 @@
+{
+    "0": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x0*1"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS10 to GS30 Crop Growth",
+        "rule_num": 0,
+        "stoichiomety": [
+            [
+                -0.1,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "1": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x0*0.01"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS10 Decay",
+        "rule_num": 1,
+        "stoichiomety": [
+            [
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "2": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x1*1"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS30 to GS31 Crop Growth",
+        "rule_num": 2,
+        "stoichiomety": [
+            [
+                0.0,
+                -0.1,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "3": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x1*0.01"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS30 Decay",
+        "rule_num": 3,
+        "stoichiomety": [
+            [
+                0.0,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "4": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x2*1"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS31 to GS39 Crop Growth",
+        "rule_num": 4,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                -0.1,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "5": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x2*0.01"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS31 Decay",
+        "rule_num": 5,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "6": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x3*1"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS39 to GS59 Crop Growth",
+        "rule_num": 6,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                -0.1,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "7": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x3*0.01"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS39 Decay",
+        "rule_num": 7,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "8": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x4*1"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS59 to GS61 Crop Growth",
+        "rule_num": 8,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                -0.1,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "9": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x4*0.01"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS59 Decay",
+        "rule_num": 9,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "10": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x5*1"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS61 to GS71 Crop Growth",
+        "rule_num": 10,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                -0.1,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "11": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x5*0.01"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS61 Decay",
+        "rule_num": 11,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "12": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x6*1"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS71 to GS87 Crop Growth",
+        "rule_num": 12,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                -0.1,
+                0.1,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "13": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x6*0.01"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS71 Decay",
+        "rule_num": 13,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "14": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x7*1"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS87 to   Crop Growth",
+        "rule_num": 14,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                -0.1,
+                0.1,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "15": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "x7*0.01"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat GS87 Decay",
+        "rule_num": 15,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "16": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "(x24+x23)*x10*(loc_Wheat - x9)"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Wheat planting",
+        "rule_num": 16,
+        "stoichiomety": [
+            [
+                1000.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1000.0,
+                -1000.0
+            ]
+        ]
+    },
+    "17": {
+        "matching_indices": [
+            [
+                0
+            ],
+            [
+                1
+            ],
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ],
+            [
+                6
+            ],
+            [
+                7
+            ],
+            [
+                8
+            ],
+            [
+                9
+            ]
+        ],
+        "propensity": [
+            "(x14)*x7"
+        ],
+        "rule_location_types": "FarmRegion",
+        "rule_name": "Productive Wheat harvest",
+        "rule_num": 17,
+        "stoichiomety": [
+            [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                -1.0,
+                1.0,
+                0.0,
+                0.0
+            ]
+        ]
+    }
+}

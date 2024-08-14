@@ -5,7 +5,7 @@ import ModelLocations
 import ModelRules
 
 import SupplyChainLocations
-import Backend.ModelCreation.BasicRules as BasicRules
+import BasicRules
 
 import RuleMatching
 

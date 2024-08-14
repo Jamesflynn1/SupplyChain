@@ -28,7 +28,7 @@ def createMonthPropTerm(months:list):
 
 class CropStages:
     def __init__(self, stages_filepath:str, crops_filepath:str) -> None:
-        crop_stages_data = pd.read_csv(stages_filepath)
+        crop_stages_data = pd.read_csv(stages_filepath, converters={})
         crops_background_data = pd.read_csv(crops_filepath)
         
 
@@ -36,7 +36,7 @@ class CropStages:
         self.crop_stages_dict = defaultdict(list)
         self.crops = set([])
         self.crop_stage_info = {}
-        self.additional_classes = ["seed", "planted", "harvested"]
+        self.additional_classes = ["Seeds", "Planted", "Harvested"]
 
         self.crop_info = {}
 
@@ -58,12 +58,14 @@ class CropStages:
             crop = crop_row["Crop"]
             self.crop_cols = []
             if len(self.crop_cols) == 0:
-                self.crop_cols = extractColumns(stage_row, exlude_list=["Crop"])
+                self.crop_cols = extractColumns(crop_row, exlude_list=["Crop"])
             self.crop_info[f"{crop_name}"] = {cols:crop_row[cols] for cols in self.crop_cols}
 
 
         for crop in self.crops:
             self.crop_stages_dict[crop] += self.additional_classes
+            for stage in self.additional_classes:
+                self.crop_stage_info[f"{crop}_{stage}"] = {"Measurement Units":"Placeholder"}
 
     def returnBasicStageDict(self):
         return self.crop_stages_dict
@@ -87,65 +89,68 @@ class CropStages:
                             last_crop_stage = stage
                         else:
                             raise(ValueError(f"Crop {crop} has atleast two final crop stages {last_crop_stage} and {stage}"))
-                        target_str = crop+"_"+"harvested"
+                        target_str = crop+"_"+"Harvested"
                     else:
                         target_str = crop+"_"+info["Next Growth Stage"]
 
                     crop_growth_rule  = BasicRules.SingleLocationProductionRule(self.location_type_name,
-                                                                        [crop+"_"+stage],[(1/info["Stochasticity"])*info["Transport Base Amt"]],
+                                                                        [crop+"_"+stage],[info["Transport Base Amt"]/info["Stochasticity"]],
                                                                         [target_str],[info["Transport Base Amt"]*info["Next Stage Measurement Factor"]/info["Stochasticity"]],
                                                                         f"{current_class_string}*{info['Stochasticity']}", [current_class_string],
-                                                                        f"{crop} {stage} to {info["Next Growth Stage"]} Crop Growth")
+                                                                        f"{crop} {stage} to {info['Next Growth Stage']} Crop Growth")
                     crop_death_rule = BasicRules.ExitEntranceRule(self.location_type_name,
-                                                                        [crop+"_"+stage],[info["Transport Base Amt"]],
+                                                                        crop+"_"+stage,info["Transport Base Amt"],
                                                                         f"{current_class_string}*{info['Spoilage Rate']}", [current_class_string],
                                                                         f"{crop} {stage} Decay")
         
                     rules.append(crop_growth_rule)
                     rules.append(crop_death_rule)
 
-            seed_period_term = createMonthPropTerm(crop_info_dict["Plant Period"])
+            seed_period_term = createMonthPropTerm(crop_info_dict["Plant Period"].split(" "))
+            first_stage = crop+"_"+crop_info_dict["First Stage"]
             seed_rule = BasicRules.SingleLocationProductionRule(self.location_type_name,
-                                                                        [crop+"_seed"],[1],
-                                                                        [crop+"",crop+""],[1],
-                                                                        f"{seed_period_term}*{info['Stochasticity']}", [current_class_string])
-            harvest_period_term = createMonthPropTerm(crop_info_dict["Harvest Period"])
+                                                                        [crop+"_Seeds"],[1000],
+                                                                        [first_stage,crop+"_Planted"],[1000, 1000],
+                                                                        f"{seed_period_term}*{crop}_Seeds*(loc_{crop_info_dict['Capacity Constant Name']} - {crop}_Planted)", [f"{crop}_Planted", f"{crop}_Seeds"],
+                                                                         f"{crop} planting")
+            harvest_period_term = createMonthPropTerm(crop_info_dict["Harvest Period"].split(" "))
             harvest_rule = BasicRules.SingleLocationProductionRule(self.location_type_name,
                                                                         [crop+"_"+last_crop_stage],[1],
-                                                                        [crop+"_harvested"],[1],
-                                                                        f"{harvest_period_term}*{info['Stochasticity']}", [current_class_string])
+                                                                        [crop+"_Harvested"],[1],
+                                                                        f"{harvest_period_term}*{crop+'_'+last_crop_stage}", [current_class_string],
+                                                                        f"Productive {crop} harvest")
+            #for harvest_classes = [crop+harvest for harvest in []]
+            #harvest_rules = BasicRules.ExitEntranceRule(self.location_type_name,
+            #                                                            [crop+"_"+last_crop_stage],[1],
+             #                                                           [crop+"_harvested"],[1],
+            #                                                            f"{harvest_period_term}*{info['Stochasticity']}", [current_class_string])
+            rules.append(seed_rule)
+            rules.append(harvest_rule)
         return rules
     
     def returnCropClassData(self):
-        return
+        crop_classes = [[f"{crop}_{stage}", self.crop_stage_info[f"{crop}_{stage}"]["Measurement Units"],"None"]
+                        for crop in list(self.crop_stages_dict.keys()) for stage in self.crop_stages_dict[crop]]
+        return crop_classes
+class CropRegions:
+    def __init__(self, region_filepath:str, crop_stages:CropStages) -> None:
+        region_data = pd.read_csv(region_filepath)
+        self.regions = []
+        constants = []
+        for i in range(len(region_data)):
+            region_row = region_data.iloc[i]
+            if len(constants) == 0:
+                constants = extractColumns(region_row, exlude_list=["Name","Lat","Long"])
+            
+            print(region_row["Lat"])
+            print(crop_stages.returnBasicStageDict())
+            region = SupplyChainLocations.FarmRegion(crop_stages.returnBasicStageDict(), region_row["Lat"], region_row["Long"], region_row["Name"])
+            print(region_row.keys()[0])
+            region.addAndSetConstants({constant.replace(" (Ha)","").replace(" ", "_"):float(region_row[constant]) for constant in constants})
+            
+            region.setInitialConditions({f"{crop}_Seeds":float(crop_stages.crop_info[crop]["Starting Seeds"]) for crop in crop_stages.crops})
 
-def processRegionData(filepath:str, crop_stages:CropStages):
-    region_data = pd.read_csv(filepath)
-    regions = []
-    constants = []
-    for i in range(len(region_data)):
-        region_row = region_data.iloc[i]
-        if len(constants) == 0:
-            constants = extractColumns(region_row, exlude_list=["Name","Lat","Long"])
+            self.regions.append(region)
         
-        print(region_row["Lat"])
-        print(crop_stages.returnBasicStageDict())
-        region = SupplyChainLocations.FarmRegion(crop_stages.returnBasicStageDict(), region_row["Lat"], region_row["Long"], region_row["Name"])
-        print(region_row.keys()[0])
-        region.addAndSetConstants({constant.replace(" (Ha)",""):region_row[constant] for constant in constants})
-
-        regions.append(region)
-    return regions
-
-    #regions = [ for i in range()]
-    #for x in region_data:
-   #print(region_data)
-
-
-
-
-cs = CropStages("Backend/ModelCreation/DescriptionFiles/CropsStages.csv")
-processRegionData("Backend/ModelCreation/DescriptionFiles/Regions.csv", cs)
-
-rules = cs.returnCropRules()
-print("Done")
+    def returnRegions(self):
+        return self.regions

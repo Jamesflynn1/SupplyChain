@@ -3,7 +3,7 @@ import ModelState
 
 import collections
 class Solver:
-    def __init__(self, locations, rules, matched_indices, model_state:ModelState.ModelState, use_cached_propensities:bool = True, propensity_update_dict:dict = {}):
+    def __init__(self, locations, rules, matched_indices, model_state:ModelState.ModelState, use_cached_propensities:bool = True, no_rules_behaviour:str = "step", propensity_update_dict:dict = {}):
         self.locations = locations
         self.rules = rules
         self.matched_indices = matched_indices
@@ -17,6 +17,10 @@ class Solver:
         if self.use_cached_propensities:
             self.total_propensity = 0
         self.propensity_update_dict = propensity_update_dict
+        # Either step or exit
+        assert (no_rules_behaviour in ["step", "exit"])
+        self.no_rules_behaviour = no_rules_behaviour
+        self.default_step = 1
 
     def simulateOneStep(self):
         raise(TypeError("Abstract class Solver, please use a concrete implementation."))
@@ -69,8 +73,8 @@ class Solver:
         else:
             return self.total_propensity
 class GillespieSolver(Solver):
-    def __init__(self, locations, rules, matched_indices, model_state:ModelState.ModelState, use_cached_propensities:bool = True, propensity_update_dict:dict = {}):
-        super().__init__(locations, rules, matched_indices, model_state, use_cached_propensities, propensity_update_dict)
+    def __init__(self, locations, rules, matched_indices, model_state:ModelState.ModelState, use_cached_propensities:bool = True, no_rules_behaviour:str = "step", propensity_update_dict:dict = {}):
+        super().__init__(locations, rules, matched_indices, model_state, use_cached_propensities, no_rules_behaviour, propensity_update_dict)
     
     def simulateOneStep(self, current_time):
         self.performPropensityUpdates()
@@ -78,8 +82,13 @@ class GillespieSolver(Solver):
         total_propensity = self.returnTotalPropensity()
         
         if total_propensity <= 0:
-            print("Finishing model simulation early.\n No rules left to trigger - all rules have 0 propensity.")
-            return
+            if self.no_rules_behaviour == "end":
+                print("Finishing model simulation early.\n No rules left to trigger - all rules have 0 propensity.")
+                return
+            elif self.no_rules_behaviour == "step":
+                print(f"Stepping {self.default_step} ahead.\n No rules left to trigger - all rules have 0 propensity.")
+                return current_time + self.default_step
+        
         # Generate 0 to 1
         # Random rule
         u1, r2 = np.random.random_sample(2)
@@ -100,8 +109,8 @@ class GillespieSolver(Solver):
         return current_time + u2
 
 class TauLeapingGillespieSolver(Solver):
-    def __init__(self, locations, rules, matched_indices, model_state, use_cached_propensities:bool = True):
-        super().__init__(locations, rules, matched_indices, model_state, use_cached_propensities)
+    def __init__(self, locations, rules, matched_indices, model_state, use_cached_propensities:bool = True, no_rules_behaviour:str = "step"):
+        super().__init__(locations, rules, matched_indices, model_state, use_cached_propensities, no_rules_behaviour)
     
     def simulateOneStep(self, current_time):
         total_propensity = 0
@@ -118,8 +127,12 @@ class TauLeapingGillespieSolver(Solver):
                 propensities.append([propensity, [rule_i, index_set_I]])
                 
         if total_propensity <= 0:
-            print("Finishing model simulation early.\n No rules left to trigger - all rules have 0 propensity.")
-            return
+            if self.no_rules_behaviour == "end":
+                print("Finishing model simulation early.\n No rules left to trigger - all rules have 0 propensity.")
+                return
+            elif self.no_rules_behaviour == "step":
+                print(f"Stepping {self.default_step} ahead.\n No rules left to trigger - all rules have 0 propensity.")
+                return current_time + self.default_step
         # Generate 0 to 1
         # Random rule
         u1, r2 = np.random.random_sample(2)

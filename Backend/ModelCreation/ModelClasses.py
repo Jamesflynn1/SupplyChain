@@ -1,5 +1,5 @@
 import json
-
+from pathlib import Path
 class Classes:
     def __init__(self, allow_base_model_classes = True):
         self.class_def_dict = {}
@@ -31,6 +31,9 @@ class Classes:
         return builtin_classes
     
     def writeClassJSON(self, filepath):
+        #folder_paths = filepath.split("/").pop()
+        #folder = folder_paths.join
+        #Path(folder).mkdir(parents=True, exist_ok=True)
         
         json_classes = json.dumps(self.class_def_dict, indent=4, sort_keys=True)
 

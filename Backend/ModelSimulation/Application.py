@@ -12,7 +12,7 @@ import time
 class ModelBackend:
 
     def __init__(self, start_date, solver_type:str = "Gillespie", location_filename:str = "Locations.json", matched_rules_filename:str = "LocationMatchedRules.json", classes_filename:str = "Classes.json",
-                 model_folder:str = "Backend/ModelFiles/", propensity_caching:bool = True):
+                 model_folder:str = "Backend/ModelFiles/", propensity_caching:bool = True, no_rules_behaviour:str = "step"):
 
         self.matched_rules_filename = matched_rules_filename
         self.location_filename = location_filename
@@ -25,13 +25,15 @@ class ModelBackend:
 
         self.trajectory = ModelClasses.Trajectory(self.locations)
 
+        self.no_rules_behaviour = no_rules_behaviour
+
         if propensity_caching:
             self.rule_propensity_update_dict = RuleChain.returnOneStepRuleUpdates(self.rules, self.locations, self.matched_indices, self.model_state.returnModelClasses())
         else:
             self.rule_propensity_update_dict = {}
 
         if solver_type == "Gillespie":
-            self.solver =  ModelSolvers.GillespieSolver(self.locations, self.rules, self.matched_indices, self.model_state, propensity_caching, self.rule_propensity_update_dict)
+            self.solver =  ModelSolvers.GillespieSolver(self.locations, self.rules, self.matched_indices, self.model_state, propensity_caching, no_rules_behaviour, self.rule_propensity_update_dict)
         else:
             raise ValueError("Only supported model solver at the moment is exact Gillespie.")
 

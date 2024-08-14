@@ -103,21 +103,21 @@ class Rule:
         assert(len(locations) == len(self.stoichiometry))
         negative = False
         new_class_values = []
+
         for loc_i, location in enumerate(locations):
             new_location_values = self.locationAttemptedCompartmentChange(location.class_values, loc_i, times_triggered)
             # CHANGE TODO
             if np.any(new_location_values<-10):
                 negative = True
-                break
+                new_class_values.append(new_location_values)#
+                #break
             else:
                 new_class_values.append(new_location_values)
-        if not negative:
-            for loc_i, location in enumerate(locations):
-                location.updateCompartmentValues(new_class_values[loc_i])
-            return True
-        else:
-
-            return False
+        #if not negative:
+        for loc_i, location in enumerate(locations):
+            location.updateCompartmentValues(new_class_values[loc_i])
+        #return not negative
+        return True
         
 class Trajectory:
     def __init__(self, locations) -> None:
@@ -143,11 +143,11 @@ class Trajectory:
         self.last_time = time
         self.last_location_index = location_index
 
-    def plotAllClassesOverTime(self, location_index):
+    def plotAllClassesOverTime(self, location_index, figure_position = "left"):
         # ALLOW NONE AS ENTRY
         class_values = np.array(self.trajectory_location_values[location_index])
         for class_i in range(len(class_values[0])):
             plt.plot(self.timestamps[location_index], class_values[:,class_i])
-        plt.legend([self.location_labels[location_index][str(i)].replace("_", " ") for i in range(len(self.location_labels[location_index]))])
+        plt.legend([self.location_labels[location_index][str(i)].replace("_", " ") for i in range(len(self.location_labels[location_index]))], loc=figure_position)
         plt.title(f"Classes over time for {self.location_names[location_index]}")
         plt.show()
