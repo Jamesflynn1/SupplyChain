@@ -1,5 +1,369 @@
 {
     "0": {
+        "name": "Winter_Barley GS10 to GS30 Crop Growth",
+        "propensities": {
+            "0": "Winter_Barley_GS10*1"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS10",
+                "1": "Winter_Barley_GS30"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "1": {
+        "name": "Winter_Barley GS10 Decay",
+        "propensities": {
+            "0": "Winter_Barley_GS10*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS10"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "2": {
+        "name": "Winter_Barley GS30 to GS31 Crop Growth",
+        "propensities": {
+            "0": "Winter_Barley_GS30*1"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS30",
+                "1": "Winter_Barley_GS31"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "3": {
+        "name": "Winter_Barley GS30 Decay",
+        "propensities": {
+            "0": "Winter_Barley_GS30*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS30"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "4": {
+        "name": "Winter_Barley GS31 to GS39 Crop Growth",
+        "propensities": {
+            "0": "Winter_Barley_GS31*1"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS31",
+                "1": "Winter_Barley_GS39"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "5": {
+        "name": "Winter_Barley GS31 Decay",
+        "propensities": {
+            "0": "Winter_Barley_GS31*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS31"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "6": {
+        "name": "Winter_Barley GS39 to GS59 Crop Growth",
+        "propensities": {
+            "0": "Winter_Barley_GS39*1"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS39",
+                "1": "Winter_Barley_GS59"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "7": {
+        "name": "Winter_Barley GS39 Decay",
+        "propensities": {
+            "0": "Winter_Barley_GS39*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS39"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "8": {
+        "name": "Winter_Barley GS59 to GS61 Crop Growth",
+        "propensities": {
+            "0": "Winter_Barley_GS59*1"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS59",
+                "1": "Winter_Barley_GS61"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "9": {
+        "name": "Winter_Barley GS59 Decay",
+        "propensities": {
+            "0": "Winter_Barley_GS59*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS59"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "10": {
+        "name": "Winter_Barley GS61 to GS71 Crop Growth",
+        "propensities": {
+            "0": "Winter_Barley_GS61*1"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS61",
+                "1": "Winter_Barley_GS71"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "11": {
+        "name": "Winter_Barley GS61 Decay",
+        "propensities": {
+            "0": "Winter_Barley_GS61*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS61"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "12": {
+        "name": "Winter_Barley GS71 to GS87 Crop Growth",
+        "propensities": {
+            "0": "Winter_Barley_GS71*1"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS71",
+                "1": "Winter_Barley_GS87"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "13": {
+        "name": "Winter_Barley GS71 Decay",
+        "propensities": {
+            "0": "Winter_Barley_GS71*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS71"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "14": {
+        "name": "Winter_Barley GS87 to   Crop Growth",
+        "propensities": {
+            "0": "Winter_Barley_GS87*1"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS87",
+                "1": "Winter_Barley_Harvested"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -0.1,
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "15": {
+        "name": "Winter_Barley GS87 Decay",
+        "propensities": {
+            "0": "Winter_Barley_GS87*0.01"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS87"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                0.1
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "16": {
+        "name": "Winter_Barley planting",
+        "propensities": {
+            "0": "(model_month_sept+model_month_oct)*Winter_Barley_Seeds*(loc_Winter_Barley - Winter_Barley_Planted)"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS10",
+                "1": "Winter_Barley_Planted",
+                "2": "Winter_Barley_Seeds"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                1000.0,
+                1000.0,
+                -1000.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "17": {
+        "name": "Productive Winter_Barley harvest",
+        "propensities": {
+            "0": "(model_month_aug)*Winter_Barley_GS87"
+        },
+        "required_classes": [
+            {
+                "0": "Winter_Barley_GS87",
+                "1": "Winter_Barley_Harvested"
+            }
+        ],
+        "stoichiometries": {
+            "0": [
+                -1.0,
+                1.0
+            ]
+        },
+        "target_types": [
+            "FarmRegion"
+        ]
+    },
+    "18": {
         "name": "Wheat GS10 to GS30 Crop Growth",
         "propensities": {
             "0": "Wheat_GS10*1"
@@ -20,7 +384,7 @@
             "FarmRegion"
         ]
     },
-    "1": {
+    "19": {
         "name": "Wheat GS10 Decay",
         "propensities": {
             "0": "Wheat_GS10*0.01"
@@ -39,7 +403,7 @@
             "FarmRegion"
         ]
     },
-    "2": {
+    "20": {
         "name": "Wheat GS30 to GS31 Crop Growth",
         "propensities": {
             "0": "Wheat_GS30*1"
@@ -60,7 +424,7 @@
             "FarmRegion"
         ]
     },
-    "3": {
+    "21": {
         "name": "Wheat GS30 Decay",
         "propensities": {
             "0": "Wheat_GS30*0.01"
@@ -79,7 +443,7 @@
             "FarmRegion"
         ]
     },
-    "4": {
+    "22": {
         "name": "Wheat GS31 to GS39 Crop Growth",
         "propensities": {
             "0": "Wheat_GS31*1"
@@ -100,7 +464,7 @@
             "FarmRegion"
         ]
     },
-    "5": {
+    "23": {
         "name": "Wheat GS31 Decay",
         "propensities": {
             "0": "Wheat_GS31*0.01"
@@ -119,7 +483,7 @@
             "FarmRegion"
         ]
     },
-    "6": {
+    "24": {
         "name": "Wheat GS39 to GS59 Crop Growth",
         "propensities": {
             "0": "Wheat_GS39*1"
@@ -140,7 +504,7 @@
             "FarmRegion"
         ]
     },
-    "7": {
+    "25": {
         "name": "Wheat GS39 Decay",
         "propensities": {
             "0": "Wheat_GS39*0.01"
@@ -159,7 +523,7 @@
             "FarmRegion"
         ]
     },
-    "8": {
+    "26": {
         "name": "Wheat GS59 to GS61 Crop Growth",
         "propensities": {
             "0": "Wheat_GS59*1"
@@ -180,7 +544,7 @@
             "FarmRegion"
         ]
     },
-    "9": {
+    "27": {
         "name": "Wheat GS59 Decay",
         "propensities": {
             "0": "Wheat_GS59*0.01"
@@ -199,7 +563,7 @@
             "FarmRegion"
         ]
     },
-    "10": {
+    "28": {
         "name": "Wheat GS61 to GS71 Crop Growth",
         "propensities": {
             "0": "Wheat_GS61*1"
@@ -220,7 +584,7 @@
             "FarmRegion"
         ]
     },
-    "11": {
+    "29": {
         "name": "Wheat GS61 Decay",
         "propensities": {
             "0": "Wheat_GS61*0.01"
@@ -239,7 +603,7 @@
             "FarmRegion"
         ]
     },
-    "12": {
+    "30": {
         "name": "Wheat GS71 to GS87 Crop Growth",
         "propensities": {
             "0": "Wheat_GS71*1"
@@ -260,7 +624,7 @@
             "FarmRegion"
         ]
     },
-    "13": {
+    "31": {
         "name": "Wheat GS71 Decay",
         "propensities": {
             "0": "Wheat_GS71*0.01"
@@ -279,7 +643,7 @@
             "FarmRegion"
         ]
     },
-    "14": {
+    "32": {
         "name": "Wheat GS87 to   Crop Growth",
         "propensities": {
             "0": "Wheat_GS87*1"
@@ -300,7 +664,7 @@
             "FarmRegion"
         ]
     },
-    "15": {
+    "33": {
         "name": "Wheat GS87 Decay",
         "propensities": {
             "0": "Wheat_GS87*0.01"
@@ -319,7 +683,7 @@
             "FarmRegion"
         ]
     },
-    "16": {
+    "34": {
         "name": "Wheat planting",
         "propensities": {
             "0": "(model_month_sept+model_month_oct)*Wheat_Seeds*(loc_Wheat - Wheat_Planted)"
@@ -342,7 +706,7 @@
             "FarmRegion"
         ]
     },
-    "17": {
+    "35": {
         "name": "Productive Wheat harvest",
         "propensities": {
             "0": "(model_month_aug)*Wheat_GS87"

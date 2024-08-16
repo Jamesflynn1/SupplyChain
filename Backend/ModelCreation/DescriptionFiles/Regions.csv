@@ -1,4 +1,4 @@
-Name,Lat,Long,Arable Land Total (Ha),Wheat (Ha),Winter Barley (Ha),Spring Barley (Ha),Oats (Ha),Potatoes (Ha),Sugar Beet (Ha),Field Beans (Ha),Oilseed Rape (Ha),Stockfeed (Ha),Maize (Ha),Bare/fallow (Ha)
+Name,Lat,Long,Arable Land Total (Ha),Wheat (Ha),Winter_Barley (Ha),Spring_Barley (Ha),Oats (Ha),Potatoes (Ha),Sugar_Beet (Ha),Field_Beans (Ha),Oilseed_Rape (Ha),Stockfeed (Ha),Maize (Ha),Bare/fallow (Ha)
 North East,54.075,-2.75,158912,65184,24560,16919,11455,1267,64,5630,16578,2647,322,10620
 North West,55,-1.87,115826,31059,13897,24879,5908,6462,529,2358,3584,3650,12962,5046
 Yorkshire & The Humber,53.566667,-1.2,515936,225371,61079,66960,14283,19212,7493,18645,42210,7484,12484,23880

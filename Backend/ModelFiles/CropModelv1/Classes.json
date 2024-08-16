@@ -43,6 +43,50 @@
         "class_measurement_unit": "Placeholder",
         "class_restriction": "None"
     },
+    "Winter_Barley_GS10": {
+        "class_measurement_unit": "Ha",
+        "class_restriction": "None"
+    },
+    "Winter_Barley_GS30": {
+        "class_measurement_unit": "Ha",
+        "class_restriction": "None"
+    },
+    "Winter_Barley_GS31": {
+        "class_measurement_unit": "Ha",
+        "class_restriction": "None"
+    },
+    "Winter_Barley_GS39": {
+        "class_measurement_unit": "Ha",
+        "class_restriction": "None"
+    },
+    "Winter_Barley_GS59": {
+        "class_measurement_unit": "Ha",
+        "class_restriction": "None"
+    },
+    "Winter_Barley_GS61": {
+        "class_measurement_unit": "Ha",
+        "class_restriction": "None"
+    },
+    "Winter_Barley_GS71": {
+        "class_measurement_unit": "Ha",
+        "class_restriction": "None"
+    },
+    "Winter_Barley_GS87": {
+        "class_measurement_unit": "Ha",
+        "class_restriction": "None"
+    },
+    "Winter_Barley_Harvested": {
+        "class_measurement_unit": "Placeholder",
+        "class_restriction": "None"
+    },
+    "Winter_Barley_Planted": {
+        "class_measurement_unit": "Placeholder",
+        "class_restriction": "None"
+    },
+    "Winter_Barley_Seeds": {
+        "class_measurement_unit": "Placeholder",
+        "class_restriction": "None"
+    },
     "model_day": {
         "class_measurement_unit": "Day of year",
         "class_restriction": "None"

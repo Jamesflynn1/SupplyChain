@@ -59,7 +59,7 @@ class CropStages:
             self.crop_cols = []
             if len(self.crop_cols) == 0:
                 self.crop_cols = extractColumns(crop_row, exlude_list=["Crop"])
-            self.crop_info[f"{crop_name}"] = {cols:crop_row[cols] for cols in self.crop_cols}
+            self.crop_info[f"{crop}"] = {cols:crop_row[cols] for cols in self.crop_cols}
 
 
         for crop in self.crops:
@@ -74,8 +74,8 @@ class CropStages:
         # Seeds, harvested, yield
         rules = []
 
-        last_crop_stage = None
         for crop in self.crops:
+            last_crop_stage = None
             crop_info_dict = self.crop_info[crop]
             stages = self.crop_stages_dict[crop]
             for stage in stages:

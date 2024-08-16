@@ -143,7 +143,7 @@ class Trajectory:
         self.last_time = time
         self.last_location_index = location_index
 
-    def plotAllClassesOverTime(self, location_index, figure_position = "left"):
+    def plotAllClassesOverTime(self, location_index, figure_position = "center left"):
         # ALLOW NONE AS ENTRY
         class_values = np.array(self.trajectory_location_values[location_index])
         for class_i in range(len(class_values[0])):
